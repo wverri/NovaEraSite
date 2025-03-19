@@ -1,31 +1,16 @@
 import Link from 'next/link';
 import { FaBook, FaArrowLeft, FaCompass, FaLeaf, FaRunning, FaShieldAlt } from 'react-icons/fa';
-
-// Componentes personalizados para ícones que não existem no react-icons
-const FaSwords = (props) => (
-  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512" fill="currentColor" {...props}>
-    <path d="M529.6 84l-126.4 126.4 48.4 48.4 126.4-126.4-48.4-48.4zM57.4 308.5l42.8-42.8-48.4-48.4-42.8 42.8 48.4 48.4zM394.8 218.6l-42.8 42.8 48.4 48.4 42.8-42.8-48.4-48.4zM193.3 420.1l126.4-126.4-48.4-48.4-126.4 126.4 48.4 48.4z"/>
-  </svg>
-);
-
-const FaMagic = (props) => (
-  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" fill="currentColor" {...props}>
-    <path d="M224 96l16-32 32-16-16-32-32-16-16 32-32 16 16 32 32 16zm96 64l16-32 32-16-16-32-32-16-16 32-32 16 16 32 32 16zm-160 0l16-32 32-16-16-32-32-16-16 32-32 16 16 32 32 16zm160 160l16-32 32-16-16-32-32-16-16 32-32 16 16 32 32 16zm-256 0l16-32 32-16-16-32-32-16-16 32-32 16 16 32 32 16zM88 280l16-32 32-16-16-32-32-16-16 32-32 16 16 32 32 16zm304 48l16-32 32-16-16-32-32-16-16 32-32 16 16 32 32 16z"/>
-  </svg>
-);
-
-const FaHammer = (props) => (
-  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512" fill="currentColor" {...props}>
-    <path d="M572.5 241.4C518.3 135.6 410.9 64 288 64S57.7 135.6 3.5 241.4C1.2 246.1 0 251.4 0 256s1.2 9.9 3.5 14.6C57.7 376.4 165.1 448 288 448s230.3-71.6 284.5-177.4c2.3-4.7 3.5-10 3.5-14.6s-1.2-9.9-3.5-14.6zM413.3 335.8c-5.1-12.2-17.3-19.9-29.7-19.9-11.9 0-23.5 7.2-29.7 19.9l-50.9 121.9c-7.4 17.9 2.8 38.3 20.7 45.8 17.9 7.4 38.3-2.8 45.8-20.7L419.3 396l49.9 86.8c7.4 17.9 27.9 28.1 45.8 20.7 17.9-7.4 28.1-27.9 20.7-45.8l-50.9-121.9z"/>
-  </svg>
-);
+import { CustomSwordIcon, CustomMagicIcon, CustomHammerIcon } from '../../components/icons/CustomIcons';
+import PageHeader from '../../components/ui/PageHeader';
+import SectionCard from '../../components/ui/SectionCard';
+import ItemCard from '../../components/ui/ItemCard';
 
 export default function SkillsPage() {
   // Definição das categorias de skills
   const skillCategories = [
     {
       title: "Combate Corpo-a-Corpo",
-      icon: <FaSwords className="h-10 w-10 mb-3 text-uo-crimson dark:text-uo-gold" />,
+      icon: <CustomSwordIcon className="h-10 w-10 mb-3 text-uo-crimson dark:text-uo-gold" />,
       skills: [
         {
           name: "Swordsmanship",
@@ -85,7 +70,7 @@ export default function SkillsPage() {
     },
     {
       title: "Magia",
-      icon: <FaMagic className="h-10 w-10 mb-3 text-uo-crimson dark:text-uo-gold" />,
+      icon: <CustomMagicIcon className="h-10 w-10 mb-3 text-uo-crimson dark:text-uo-gold" />,
       skills: [
         {
           name: "Magery",
@@ -131,7 +116,7 @@ export default function SkillsPage() {
     },
     {
       title: "Artesanato",
-      icon: <FaHammer className="h-10 w-10 mb-3 text-uo-crimson dark:text-uo-gold" />,
+      icon: <CustomHammerIcon className="h-10 w-10 mb-3 text-uo-crimson dark:text-uo-gold" />,
       skills: [
         {
           name: "Blacksmithy",
@@ -278,23 +263,19 @@ export default function SkillsPage() {
   return (
     <div className="container-uo py-12">
       <div className="max-w-5xl mx-auto">
-        <div className="mb-8 flex items-center">
-          <Link href="/wiki" className="text-uo-crimson dark:text-uo-gold hover:underline flex items-center">
-            <FaArrowLeft className="mr-2" /> Voltar para Wiki
-          </Link>
-        </div>
-        
-        <div className="text-center mb-12">
-          <h1 className="header-medieval text-3xl md:text-5xl mb-4">Sistema de Skills</h1>
-          <p className="text-lg text-uo-darkwood/80 dark:text-uo-mist/80 max-w-3xl mx-auto">
-            Guia completo sobre as habilidades disponíveis no Nova Era Shard.
-          </p>
-        </div>
+        <PageHeader
+          title="Sistema de Skills"
+          description="Guia completo sobre as habilidades disponíveis no Nova Era Shard."
+          backLink="/wiki"
+          backLinkText="Voltar para Wiki"
+          icon={<FaBook className="w-8 h-8" />}
+        />
         
         {/* Introdução */}
-        <div className="card-medieval mb-8">
-          <h2 className="font-medieval text-2xl mb-4 text-uo-crimson dark:text-uo-gold">Visão Geral das Skills</h2>
-          
+        <SectionCard 
+          title="Visão Geral das Skills" 
+          className="mb-8"
+        >
           <div className="prose prose-stone dark:prose-invert max-w-none">
             <p>
               No Nova Era Shard, como em Ultima Online, seu personagem é definido pelas habilidades (skills) que você escolhe desenvolver. Não existem classes fixas - seu personagem é o que você faz dele através das skills que treina.
@@ -339,16 +320,16 @@ export default function SkillsPage() {
               <li><strong>Ladrão</strong> - Focado em stealing, hiding e stealth</li>
             </ul>
           </div>
-        </div>
+        </SectionCard>
         
         {/* Lista de Skills por Categoria */}
         {skillCategories.map((category, index) => (
-          <div key={index} className="card-medieval mb-8">
-            <div className="flex items-center mb-6">
-              {category.icon}
-              <h2 className="font-medieval text-2xl ml-2">{category.title}</h2>
-            </div>
-            
+          <SectionCard
+            key={index}
+            title={category.title}
+            icon={category.icon}
+            className="mb-8"
+          >
             <div className="space-y-6">
               {category.skills.map((skill, skillIndex) => (
                 <div key={skillIndex} className="border-b border-uo-darkwood/10 dark:border-uo-gold/10 pb-4 last:border-0">
@@ -365,13 +346,13 @@ export default function SkillsPage() {
                 </div>
               ))}
             </div>
-          </div>
+          </SectionCard>
         ))}
         
         {/* Rodapé da seção com informações adicionais */}
         <div className="mt-8 p-4 bg-yellow-50 dark:bg-yellow-900/30 rounded-lg">
           <div className="flex items-center mb-2">
-            <FaHammer className="h-5 w-5 mr-2 text-uo-crimson dark:text-uo-gold" />
+            <CustomHammerIcon className="h-5 w-5 mr-2 text-uo-crimson dark:text-uo-gold" />
             <h3 className="font-medieval text-lg">Mais sobre Artesanato</h3>
           </div>
           <p className="text-uo-darkwood/80 dark:text-uo-mist/80 text-sm mb-2">
@@ -387,9 +368,10 @@ export default function SkillsPage() {
         </div>
         
         {/* Dicas de Treinamento */}
-        <div className="card-medieval mb-8">
-          <h2 className="font-medieval text-2xl mb-4 text-uo-crimson dark:text-uo-gold">Dicas de Treinamento</h2>
-          
+        <SectionCard
+          title="Dicas de Treinamento"
+          className="mb-8"
+        >
           <div className="prose prose-stone dark:prose-invert max-w-none">
             <h3>Treinamento Eficiente</h3>
             <ul>
@@ -420,45 +402,54 @@ export default function SkillsPage() {
               <li><strong>Blacksmithy</strong> - Faça adagas e escudos pequenos para economizar metal</li>
             </ul>
           </div>
-        </div>
+        </SectionCard>
         
         {/* Links para Guias Específicos */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
-          <Link href="/wiki/skills/magic" className="card-medieval p-4 hover:shadow-xl transition-shadow flex items-center">
-            <FaMagic className="h-6 w-6 mr-3 text-uo-crimson dark:text-uo-gold" />
-            <div>
-              <h3 className="font-medieval text-lg">Guia de Magia</h3>
-              <p className="text-sm text-uo-darkwood/80 dark:text-uo-mist/80">Detalhes completos sobre magias e feitiços.</p>
-            </div>
-          </Link>
-          
-          <Link href="/wiki/skills/combat" className="card-medieval p-4 hover:shadow-xl transition-shadow flex items-center">
-            <FaSwords className="h-6 w-6 mr-3 text-uo-crimson dark:text-uo-gold" />
-            <div>
-              <h3 className="font-medieval text-lg">Guia de Combate</h3>
-              <p className="text-sm text-uo-darkwood/80 dark:text-uo-mist/80">Técnicas avançadas de combate e armas.</p>
-            </div>
-          </Link>
-          
-          <Link href="/wiki/skills/crafting" className="card-medieval p-4 hover:shadow-xl transition-shadow flex items-center">
-            <FaHammer className="h-6 w-6 mr-3 text-uo-crimson dark:text-uo-gold" />
-            <div>
-              <h3 className="font-medieval text-lg">Guia de Artesanato</h3>
-              <p className="text-sm text-uo-darkwood/80 dark:text-uo-mist/80">Como criar os melhores itens do jogo.</p>
-            </div>
-          </Link>
-          
-          <Link href="/wiki/skills/survival" className="card-medieval p-4 hover:shadow-xl transition-shadow flex items-center">
-            <FaCompass className="h-6 w-6 mr-3 text-uo-crimson dark:text-uo-gold" />
-            <div>
-              <h3 className="font-medieval text-lg">Guia de Sobrevivência</h3>
-              <p className="text-sm text-uo-darkwood/80 dark:text-uo-mist/80">Técnicas para explorar o mundo com segurança.</p>
-            </div>
-          </Link>
-        </div>
+        <SectionCard
+          title="Guias Detalhados por Habilidade"
+          className="mb-8"
+        >
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <ItemCard
+              title="Guia de Magia"
+              icon={<CustomMagicIcon className="h-6 w-6" />}
+              description="Detalhes completos sobre magias e feitiços."
+              link="/wiki/skills/magic"
+              linkText="Explorar Magia"
+            />
+            
+            <ItemCard
+              title="Guia de Combate"
+              icon={<CustomSwordIcon className="h-6 w-6" />}
+              description="Técnicas avançadas de combate e armas."
+              link="/wiki/skills/combat"
+              linkText="Aprender Combate"
+            />
+            
+            <ItemCard
+              title="Guia de Artesanato"
+              icon={<CustomHammerIcon className="h-6 w-6" />}
+              description="Como criar os melhores itens do jogo."
+              link="/wiki/skills/crafting"
+              linkText="Dominar Artesanato"
+            />
+            
+            <ItemCard
+              title="Guia de Sobrevivência"
+              icon={<FaCompass className="h-6 w-6" />}
+              description="Técnicas para explorar o mundo com segurança."
+              link="/wiki/skills/survival"
+              linkText="Sobreviver no Mundo"
+            />
+          </div>
+        </SectionCard>
         
         <div className="mt-8 text-center">
-          <Link href="/wiki" className="text-uo-crimson dark:text-uo-gold hover:underline">
+          <Link 
+            href="/wiki" 
+            className="inline-flex items-center px-6 py-3 border-2 border-uo-crimson/30 dark:border-uo-gold/30 rounded-lg font-medieval text-lg text-uo-crimson dark:text-uo-gold hover:bg-uo-crimson/5 dark:hover:bg-uo-gold/5 transition-colors"
+          >
+            <FaArrowLeft className="mr-2 h-4 w-4" />
             Voltar para a Wiki
           </Link>
         </div>

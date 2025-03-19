@@ -1,18 +1,6 @@
 import Link from 'next/link';
-import { FaArrowLeft, FaShieldAlt, FaMagic, FaBolt, FaRunning } from 'react-icons/fa';
-
-// Componente personalizado para ícone que não existe no react-icons
-const FaSwords = (props) => (
-  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512" fill="currentColor" {...props}>
-    <path d="M529.6 84l-126.4 126.4 48.4 48.4 126.4-126.4-48.4-48.4zM57.4 308.5l42.8-42.8-48.4-48.4-42.8 42.8 48.4 48.4zM394.8 218.6l-42.8 42.8 48.4 48.4 42.8-42.8-48.4-48.4zM193.3 420.1l126.4-126.4-48.4-48.4-126.4 126.4 48.4 48.4z"/>
-  </svg>
-);
-
-const FaMagic = (props) => (
-  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" fill="currentColor" {...props}>
-    <path d="M224 96l16-32 32-16-32-16-16-32-16 32-32 16 32 16 16 32zM80 160l26.66-53.33L160 80l-53.34-26.67L80 0 53.34 53.33 0 80l53.34 26.67L80 160zm352 128l-26.66 53.33L352 368l53.34 26.67L432 448l26.66-53.33L512 368l-53.34-26.67L432 288zm70.62-193.77L417.77 9.38C411.53 3.12 403.34 0 395.15 0c-8.19 0-16.38 3.12-22.63 9.38L9.38 372.52c-12.5 12.5-12.5 32.76 0 45.25l84.85 84.85c6.25 6.25 14.44 9.37 22.62 9.37 8.19 0 16.38-3.12 22.63-9.37l363.14-363.15c12.5-12.48 12.5-32.75 0-45.24zM359.45 203.46l-50.91-50.91 86.6-86.6 50.91 50.91-86.6 86.6z"/>
-  </svg>
-);
+import { FaBook, FaArrowLeft, FaShieldAlt, FaRunning, FaUserAlt, FaSkull, FaQuestionCircle } from 'react-icons/fa';
+import { CustomSwordIcon, CustomMagicIcon } from '../../../components/icons/CustomIcons';
 
 export default function CombatSystemPage() {
   return (
@@ -55,7 +43,7 @@ export default function CombatSystemPage() {
         {/* Seções de Tipos de Combate */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
           <div className="card-medieval flex flex-col items-center text-center p-6">
-            <FaSwords className="h-10 w-10 mb-3 text-uo-crimson dark:text-uo-gold" />
+            <CustomSwordIcon className="h-10 w-10 mb-3 text-uo-crimson dark:text-uo-gold" />
             <h3 className="font-medieval text-xl mb-2">Combate Físico</h3>
             <p className="text-uo-darkwood/80 dark:text-uo-mist/80 text-sm">
               Domine as artes do combate com armas e escudos.
@@ -63,7 +51,7 @@ export default function CombatSystemPage() {
           </div>
           
           <div className="card-medieval flex flex-col items-center text-center p-6">
-            <FaMagic className="h-10 w-10 mb-3 text-uo-crimson dark:text-uo-gold" />
+            <CustomMagicIcon className="h-10 w-10 mb-3 text-uo-crimson dark:text-uo-gold" />
             <h3 className="font-medieval text-xl mb-2">Magia</h3>
             <p className="text-uo-darkwood/80 dark:text-uo-mist/80 text-sm">
               Domine as forças arcanas para derrotar seus inimigos.
@@ -82,7 +70,7 @@ export default function CombatSystemPage() {
         {/* Detalhes do Combate Físico */}
         <div className="card-medieval mb-8">
           <div className="flex items-center mb-4">
-            <FaSwords className="h-6 w-6 mr-2 text-uo-crimson dark:text-uo-gold" />
+            <CustomSwordIcon className="h-6 w-6 mr-2 text-uo-crimson dark:text-uo-gold" />
             <h2 className="font-medieval text-2xl">Combate Físico</h2>
           </div>
           
@@ -135,7 +123,7 @@ export default function CombatSystemPage() {
         {/* Detalhes do Combate Mágico */}
         <div className="card-medieval mb-8">
           <div className="flex items-center mb-4">
-            <FaMagic className="h-6 w-6 mr-2 text-uo-crimson dark:text-uo-gold" />
+            <CustomMagicIcon className="h-6 w-6 mr-2 text-uo-crimson dark:text-uo-gold" />
             <h2 className="font-medieval text-2xl">Combate Mágico</h2>
           </div>
           

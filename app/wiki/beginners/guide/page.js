@@ -1,12 +1,8 @@
 import Link from 'next/link';
-import { FaBook, FaArrowLeft, FaUser, FaGem, FaSwords, FaShieldAlt, FaQuestionCircle } from 'react-icons/fa';
+import { FaBook, FaArrowLeft, FaUser, FaGem, FaShieldAlt, FaQuestionCircle } from 'react-icons/fa';
+import { CustomSwordIcon } from '../../../components/icons/CustomIcons';
 
-// Componente personalizado para ícone que não existe no react-icons
-const FaSwords = (props) => (
-  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512" fill="currentColor" {...props}>
-    <path d="M529.6 84l-126.4 126.4 48.4 48.4 126.4-126.4-48.4-48.4zM57.4 308.5l42.8-42.8-48.4-48.4-42.8 42.8 48.4 48.4zM394.8 218.6l-42.8 42.8 48.4 48.4 42.8-42.8-48.4-48.4zM193.3 420.1l126.4-126.4-48.4-48.4-126.4 126.4 48.4 48.4z"/>
-  </svg>
-);
+// Removido a definição local do FaSwords, agora importamos do arquivo centralizado
 
 export default function BeginnerGuidePage() {
   return (
@@ -43,7 +39,7 @@ export default function BeginnerGuidePage() {
           </div>
           
           <div className="card-medieval flex flex-col items-center text-center p-6">
-            <FaSwords className="h-10 w-10 mb-3 text-uo-crimson dark:text-uo-gold" />
+            <CustomSwordIcon className="h-10 w-10 mb-3 text-uo-crimson dark:text-uo-gold" />
             <h3 className="font-medieval text-xl mb-2">Aventure-se</h3>
             <p className="text-uo-darkwood/80 dark:text-uo-mist/80 text-sm">
               Explore as terras, combata monstros e descubra tesouros escondidos.

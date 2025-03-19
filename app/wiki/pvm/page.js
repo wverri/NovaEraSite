@@ -1,34 +1,28 @@
 import Link from 'next/link';
 import { FaBook, FaArrowLeft, FaDragon, FaGem, FaQuestionCircle, FaMap, FaShieldAlt, FaUserAlt, FaPaw, FaDungeon } from 'react-icons/fa';
-
-// Componente customizado para ícones que não existem no react-icons
-const FaSwords = (props) => (
-  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512" fill="currentColor" {...props}>
-    <path d="M529.6 84l-126.4 126.4 48.4 48.4 126.4-126.4-48.4-48.4zM57.4 308.5l42.8-42.8-48.4-48.4-42.8 42.8 48.4 48.4zM394.8 218.6l-42.8 42.8 48.4 48.4 42.8-42.8-48.4-48.4zM193.3 420.1l126.4-126.4-48.4-48.4-126.4 126.4 48.4 48.4z"/>
-  </svg>
-);
+import { CustomSwordIcon } from '../../components/icons/CustomIcons';
+import PageHeader from '../../components/ui/PageHeader';
+import SectionCard from '../../components/ui/SectionCard';
+import ItemCard from '../../components/ui/ItemCard';
+import MedievalTable from '../../components/ui/MedievalTable';
 
 export default function PVMPage() {
   return (
     <div className="container-uo py-12">
       <div className="max-w-4xl mx-auto">
-        <div className="mb-8 flex items-center">
-          <Link href="/wiki" className="text-uo-crimson dark:text-uo-gold hover:underline flex items-center">
-            <FaArrowLeft className="mr-2" /> Voltar para Wiki
-          </Link>
-        </div>
-        
-        <div className="text-center mb-12">
-          <h1 className="header-medieval text-3xl md:text-5xl mb-4">Guia de PvM</h1>
-          <p className="text-lg text-uo-darkwood/80 dark:text-uo-mist/80 max-w-3xl mx-auto">
-            Aprenda estratégias de combate contra monstros e criaturas do Nova Era Shard.
-          </p>
-        </div>
+        <PageHeader
+          title="Guia de PvM"
+          description="Aprenda estratégias de combate contra monstros e criaturas do Nova Era Shard."
+          backLink="/wiki"
+          backLinkText="Voltar para Wiki"
+          icon={<CustomSwordIcon className="w-8 h-8" />}
+        />
         
         {/* Introdução ao PvM */}
-        <div className="card-medieval mb-8">
-          <h2 className="font-medieval text-2xl mb-4 text-uo-crimson dark:text-uo-gold">O que é PvM?</h2>
-          
+        <SectionCard 
+          title="O que é PvM?" 
+          className="mb-8"
+        >
           <div className="prose prose-stone dark:prose-invert max-w-none">
             <p>
               PvM (Player versus Monster) é o termo usado para descrever o combate entre jogadores e monstros controlados pelo computador. No Nova Era Shard, o PvM é uma parte fundamental da jogabilidade, oferecendo desafios, recompensas e uma forma de desenvolver seu personagem.
@@ -50,51 +44,41 @@ export default function PVMPage() {
               Este guia irá ajudá-lo a entender os fundamentos do PvM, desde o combate básico até estratégias avançadas para enfrentar os monstros mais poderosos de Britannia.
             </p>
           </div>
-        </div>
+        </SectionCard>
         
         {/* Seção de Acesso Rápido */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-          <Link
-            href="/wiki/pvm/classes"
-            className="card-medieval flex flex-col items-center p-6 hover:shadow-xl transition-shadow text-center"
-          >
-            <FaUserAlt className="h-12 w-12 mb-3 text-uo-crimson dark:text-uo-gold" />
-            <h3 className="font-medieval text-xl mb-2">Sistema de Classes</h3>
-            <p className="text-uo-darkwood/80 dark:text-uo-mist/80 text-sm">
-              Conheça as classes disponíveis e suas habilidades únicas
-            </p>
-          </Link>
+          <ItemCard
+            title="Sistema de Classes"
+            icon={<FaUserAlt />}
+            description="Conheça as classes disponíveis e suas habilidades únicas"
+            link="/wiki/pvm/classes"
+            linkText="Ver Classes"
+          />
           
-          <Link
-            href="/wiki/pvm/pets"
-            className="card-medieval flex flex-col items-center p-6 hover:shadow-xl transition-shadow text-center"
-          >
-            <FaPaw className="h-12 w-12 mb-3 text-uo-crimson dark:text-uo-gold" />
-            <h3 className="font-medieval text-xl mb-2">Pets & Taming</h3>
-            <p className="text-uo-darkwood/80 dark:text-uo-mist/80 text-sm">
-              Guia completo sobre domesticação e evolução de pets
-            </p>
-          </Link>
+          <ItemCard
+            title="Pets & Taming"
+            icon={<FaPaw />}
+            description="Guia completo sobre domesticação e evolução de pets"
+            link="/wiki/pvm/pets"
+            linkText="Ver Pets"
+          />
           
-          <Link
-            href="/wiki/pvm/dungeons-instanciadas"
-            className="card-medieval flex flex-col items-center p-6 hover:shadow-xl transition-shadow text-center"
-          >
-            <FaDungeon className="h-12 w-12 mb-3 text-uo-crimson dark:text-uo-gold" />
-            <h3 className="font-medieval text-xl mb-2">Dungeons Instanciadas</h3>
-            <p className="text-uo-darkwood/80 dark:text-uo-mist/80 text-sm">
-              Desafie suas habilidades em dungeons privadas com seu grupo
-            </p>
-          </Link>
+          <ItemCard
+            title="Dungeons Instanciadas"
+            icon={<FaDungeon />}
+            description="Desafie suas habilidades em dungeons privadas com seu grupo"
+            link="/wiki/pvm/dungeons-instanciadas"
+            linkText="Ver Dungeons"
+          />
         </div>
         
         {/* Conceitos Básicos de Combate */}
-        <div className="card-medieval mb-8">
-          <div className="flex items-center mb-4">
-            <FaSwords className="h-6 w-6 mr-2 text-uo-crimson dark:text-uo-gold" />
-            <h2 className="font-medieval text-2xl">Conceitos Básicos de Combate</h2>
-          </div>
-          
+        <SectionCard 
+          title="Conceitos Básicos de Combate" 
+          icon={<CustomSwordIcon className="h-6 w-6" />}
+          className="mb-8"
+        >
           <div className="prose prose-stone dark:prose-invert max-w-none">
             <p>
               Antes de enfrentar monstros poderosos, é essencial entender como funciona o sistema de combate no Nova Era Shard:
@@ -134,15 +118,14 @@ export default function PVMPage() {
               <li><strong>Resistance</strong> - Aumenta sua defesa contra tipos específicos de dano</li>
             </ul>
           </div>
-        </div>
+        </SectionCard>
         
         {/* Tipos de Criaturas */}
-        <div className="card-medieval mb-8">
-          <div className="flex items-center mb-4">
-            <FaDragon className="h-6 w-6 mr-2 text-uo-crimson dark:text-uo-gold" />
-            <h2 className="font-medieval text-2xl">Tipos de Criaturas</h2>
-          </div>
-          
+        <SectionCard 
+          title="Tipos de Criaturas" 
+          icon={<FaDragon />}
+          className="mb-8"
+        >
           <div className="prose prose-stone dark:prose-invert max-w-none">
             <p>
               O mundo de Britannia é habitado por uma grande variedade de criaturas. Conhecer as características de cada tipo é essencial para desenvolver estratégias eficazes:
@@ -214,15 +197,14 @@ export default function PVMPage() {
               <li><strong>Locais:</strong> Covis especiais, eventos do mundo</li>
             </ul>
           </div>
-        </div>
+        </SectionCard>
         
         {/* Níveis de Dificuldade */}
-        <div className="card-medieval mb-8">
-          <div className="flex items-center mb-4">
-            <FaShieldAlt className="h-6 w-6 mr-2 text-uo-crimson dark:text-uo-gold" />
-            <h2 className="font-medieval text-2xl">Classificação de Dificuldade</h2>
-          </div>
-          
+        <SectionCard 
+          title="Classificação de Dificuldade" 
+          icon={<FaShieldAlt />}
+          className="mb-8"
+        >
           <div className="prose prose-stone dark:prose-invert max-w-none">
             <p>
               No Nova Era Shard, os monstros são classificados por níveis de dificuldade para ajudar os jogadores a identificar desafios apropriados:
@@ -288,15 +270,14 @@ export default function PVMPage() {
               Recomendamos que jogadores sempre busquem desafios um pouco acima de seu nível atual para maximizar o ganho de experiência, mas sem arriscar desnecessariamente.
             </p>
           </div>
-        </div>
+        </SectionCard>
         
         {/* Estratégias de Combate */}
-        <div className="card-medieval mb-8">
-          <div className="flex items-center mb-4">
-            <FaSwords className="h-6 w-6 mr-2 text-uo-crimson dark:text-uo-gold" />
-            <h2 className="font-medieval text-2xl">Estratégias de Combate</h2>
-          </div>
-          
+        <SectionCard 
+          title="Estratégias de Combate" 
+          icon={<CustomSwordIcon className="h-6 w-6" />}
+          className="mb-8"
+        >
           <div className="prose prose-stone dark:prose-invert max-w-none">
             <p>
               Diferentes builds e classes requerem abordagens distintas para o PvM. Aqui estão algumas estratégias recomendadas:
@@ -436,15 +417,14 @@ export default function PVMPage() {
               As builds híbridas geralmente sacrificam especialização por versatilidade, mas podem ser extremamente eficazes quando bem executadas.
             </p>
           </div>
-        </div>
+        </SectionCard>
         
         {/* Áreas de Farm */}
-        <div className="card-medieval mb-8">
-          <div className="flex items-center mb-4">
-            <FaMap className="h-6 w-6 mr-2 text-uo-crimson dark:text-uo-gold" />
-            <h2 className="font-medieval text-2xl">Melhores Áreas para Farm</h2>
-          </div>
-          
+        <SectionCard 
+          title="Melhores Áreas para Farm" 
+          icon={<FaMap />}
+          className="mb-8"
+        >
           <div className="prose prose-stone dark:prose-invert max-w-none">
             <p>
               Saber onde caçar é tão importante quanto saber como caçar. Aqui estão algumas das melhores áreas por nível:
@@ -542,15 +522,14 @@ export default function PVMPage() {
               Lembre-se que algumas áreas possuem restrições de PvP, então esteja sempre atento ao entrar em dungeons mais profundas ou áreas de facção contestadas.
             </p>
           </div>
-        </div>
+        </SectionCard>
         
         {/* Dicas para Grupos */}
-        <div className="card-medieval mb-8">
-          <div className="flex items-center mb-4">
-            <FaShieldAlt className="h-6 w-6 mr-2 text-uo-crimson dark:text-uo-gold" />
-            <h2 className="font-medieval text-2xl">Estratégias para Grupos</h2>
-          </div>
-          
+        <SectionCard 
+          title="Estratégias para Grupos" 
+          icon={<FaShieldAlt />}
+          className="mb-8"
+        >
           <div className="prose prose-stone dark:prose-invert max-w-none">
             <p>
               Para conteúdo mais desafiador, formar um grupo é essencial. Aqui estão algumas dicas para PvM em grupo:
@@ -606,15 +585,14 @@ export default function PVMPage() {
               Um grupo bem coordenado pode superar desafios muito além do que seria possível individualmente, tornando acessível o conteúdo de elite e as melhores recompensas do jogo.
             </p>
           </div>
-        </div>
+        </SectionCard>
         
         {/* FAQ PvM */}
-        <div className="card-medieval mb-8">
-          <div className="flex items-center mb-6">
-            <FaQuestionCircle className="h-6 w-6 mr-2 text-uo-crimson dark:text-uo-gold" />
-            <h2 className="font-medieval text-2xl">Perguntas Frequentes sobre PvM</h2>
-          </div>
-          
+        <SectionCard 
+          title="Perguntas Frequentes sobre PvM" 
+          icon={<FaQuestionCircle />}
+          className="mb-8"
+        >
           <div className="space-y-4">
             <div className="border-b border-uo-darkwood/10 dark:border-uo-gold/10 pb-4">
               <h3 className="font-medieval text-lg mb-2">Como maximizar ganho de experiência durante PvM?</h3>
@@ -651,56 +629,63 @@ export default function PVMPage() {
               </p>
             </div>
           </div>
-        </div>
+        </SectionCard>
         
         {/* Links Úteis */}
-        <div className="card-medieval p-6">
-          <h2 className="font-medieval text-2xl mb-4 text-uo-crimson dark:text-uo-gold">Links Úteis para PvM</h2>
-          
+        <SectionCard 
+          title="Links Úteis para PvM" 
+          className="p-6"
+        >
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-            <Link href="/wiki/pvm/classes" className="p-4 bg-white/40 dark:bg-gray-900/40 rounded-lg border border-uo-darkwood/10 dark:border-uo-gold/10 hover:bg-uo-crimson/10 dark:hover:bg-uo-gold/10 transition-colors">
-              <h3 className="font-medieval text-lg mb-1">Sistema de Classes</h3>
-              <p className="text-uo-darkwood/80 dark:text-uo-mist/80 text-sm">
-                Guia detalhado das classes e suas habilidades especiais.
-              </p>
-            </Link>
+            <ItemCard
+              title="Sistema de Classes"
+              icon={<FaUserAlt />}
+              description="Guia detalhado das classes e suas habilidades especiais."
+              link="/wiki/pvm/classes"
+              linkText="Ver Classes"
+            />
             
-            <Link href="/wiki/pvm/pets" className="p-4 bg-white/40 dark:bg-gray-900/40 rounded-lg border border-uo-darkwood/10 dark:border-uo-gold/10 hover:bg-uo-crimson/10 dark:hover:bg-uo-gold/10 transition-colors">
-              <h3 className="font-medieval text-lg mb-1">Pets & Taming</h3>
-              <p className="text-uo-darkwood/80 dark:text-uo-mist/80 text-sm">
-                Sistema de pets, dicas de treinamento e evolução.
-              </p>
-            </Link>
+            <ItemCard
+              title="Pets & Taming"
+              icon={<FaPaw />}
+              description="Sistema de pets, dicas de treinamento e evolução."
+              link="/wiki/pvm/pets"
+              linkText="Ver Pets"
+            />
             
-            <Link href="/wiki/pvm/dungeons-instanciadas" className="p-4 bg-white/40 dark:bg-gray-900/40 rounded-lg border border-uo-darkwood/10 dark:border-uo-gold/10 hover:bg-uo-crimson/10 dark:hover:bg-uo-gold/10 transition-colors">
-              <h3 className="font-medieval text-lg mb-1">Dungeons Instanciadas</h3>
-              <p className="text-uo-darkwood/80 dark:text-uo-mist/80 text-sm">
-                Exploração detalhada das dungeons instanciadas exclusivas.
-              </p>
-            </Link>
+            <ItemCard
+              title="Dungeons Instanciadas"
+              icon={<FaDungeon />}
+              description="Exploração detalhada das dungeons instanciadas exclusivas."
+              link="/wiki/pvm/dungeons-instanciadas"
+              linkText="Ver Dungeons"
+            />
             
-            <Link href="/wiki/skills" className="p-4 bg-white/40 dark:bg-gray-900/40 rounded-lg border border-uo-darkwood/10 dark:border-uo-gold/10 hover:bg-uo-crimson/10 dark:hover:bg-uo-gold/10 transition-colors">
-              <h3 className="font-medieval text-lg mb-1">Guia de Skills</h3>
-              <p className="text-uo-darkwood/80 dark:text-uo-mist/80 text-sm">
-                Informações detalhadas sobre todas as habilidades e progressão.
-              </p>
-            </Link>
+            <ItemCard
+              title="Guia de Skills"
+              icon={<FaBook />}
+              description="Informações detalhadas sobre todas as habilidades e progressão."
+              link="/wiki/skills"
+              linkText="Ver Guia de Skills"
+            />
             
-            <Link href="/wiki/dungeons" className="p-4 bg-white/40 dark:bg-gray-900/40 rounded-lg border border-uo-darkwood/10 dark:border-uo-gold/10 hover:bg-uo-crimson/10 dark:hover:bg-uo-gold/10 transition-colors">
-              <h3 className="font-medieval text-lg mb-1">Guia de Dungeons</h3>
-              <p className="text-uo-darkwood/80 dark:text-uo-mist/80 text-sm">
-                Mapas e informações sobre todas as dungeons do jogo.
-              </p>
-            </Link>
+            <ItemCard
+              title="Guia de Dungeons"
+              icon={<FaBook />}
+              description="Mapas e informações sobre todas as dungeons do jogo."
+              link="/wiki/dungeons"
+              linkText="Ver Guia de Dungeons"
+            />
             
-            <Link href="/wiki/creatures" className="p-4 bg-white/40 dark:bg-gray-900/40 rounded-lg border border-uo-darkwood/10 dark:border-uo-gold/10 hover:bg-uo-crimson/10 dark:hover:bg-uo-gold/10 transition-colors">
-              <h3 className="font-medieval text-lg mb-1">Bestiário</h3>
-              <p className="text-uo-darkwood/80 dark:text-uo-mist/80 text-sm">
-                Catálogo de monstros e suas características.
-              </p>
-            </Link>
+            <ItemCard
+              title="Bestiário"
+              icon={<FaBook />}
+              description="Catálogo de monstros e suas características."
+              link="/wiki/creatures"
+              linkText="Ver Bestiário"
+            />
           </div>
-        </div>
+        </SectionCard>
         
         <div className="mt-8 text-center">
           <Link href="/wiki" className="text-uo-crimson dark:text-uo-gold hover:underline">

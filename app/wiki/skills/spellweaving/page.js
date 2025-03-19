@@ -1,12 +1,6 @@
 import Link from 'next/link';
-import { FaArrowLeft, FaFeather, FaHeart, FaMoon, FaSun, FaTree, FaWater } from 'react-icons/fa';
-
-// Componente personalizado para ícone que não existe no react-icons
-const FaSpellweaving = (props) => (
-  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" fill="currentColor" {...props}>
-    <path d="M224 96l16-32 32-16-32-16-16-32-16 32-32 16 32 16 16 32zM80 160l26.66-53.33L160 80l-53.34-26.67L80 0 53.34 53.33 0 80l53.34 26.67L80 160zm352 128l-26.66 53.33L352 368l53.34 26.67L432 448l26.66-53.33L512 368l-53.34-26.67L432 288zm-72.73-254.01c-9.97-11.3-27.14-12.37-38.44-2.4l-192 170c-13.73 12.12-14.89 33.16-2.62 46.73l80 88c18.44 20.72 50.18 6.76 50.18-22v-94c0-19.38 21.19-31.1 36.92-20.35l92.33 62.8c25.61 17.43 58.94-3.78 51.38-32.62l-26.12-101.55c-5.25-20.05-30.61-25.51-44.12-12.02L295.3 149.41c-11.3 9.96-12.37 27.13-2.4 38.44c9.97 11.3 27.14 12.37 38.44 2.4L399.2 120.4l30.65 118.96l-82.4-56.06c-41.3-28.14-97.04 1.33-97.04 52.7v58.5l-43.67-49.14l158.4-140.16c11.3-9.96 12.37-27.13 2.4-38.44l-1.77-2z" />
-  </svg>
-);
+import { FaArrowLeft, FaFeather, FaHeart, FaMoon, FaSun, FaTree, FaWater, FaGem } from 'react-icons/fa';
+import { CustomSpellweavingIcon } from '../../../components/icons/CustomIcons';
 
 export default function SpellweavingPage() {
   // Definição dos círculos de Spellweaving
@@ -413,7 +407,7 @@ export default function SpellweavingPage() {
         {/* Círculo Arcano */}
         <div className="card-medieval mb-8 bg-uo-crimson/5 dark:bg-uo-gold/5">
           <div className="flex items-center mb-4">
-            <FaSpellweaving className="h-8 w-8 mr-3 text-uo-crimson dark:text-uo-gold" />
+            <CustomSpellweavingIcon className="h-8 w-8 mr-3 text-uo-crimson dark:text-uo-gold" />
             <h2 className="font-medieval text-2xl text-uo-crimson dark:text-uo-gold">O Círculo Arcano</h2>
           </div>
           
