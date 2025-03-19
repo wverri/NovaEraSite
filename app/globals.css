@@ -1,0 +1,268 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 240 10% 3.9%;
+    --card: 0 0% 100%;
+    --card-foreground: 240 10% 3.9%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 240 10% 3.9%;
+    --primary: 206 100% 50%;
+    --primary-foreground: 0 0% 98%;
+    --secondary: 12 35% 54%;
+    --secondary-foreground: 0 0% 98%;
+    --muted: 240 5% 96%;
+    --muted-foreground: 240 4% 45%;
+    --accent: 42 98% 49%;
+    --accent-foreground: 240 6% 10%;
+    --destructive: 0 84% 30%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 240 6% 90%;
+    --input: 240 6% 90%;
+    --ring: 206 100% 50%;
+    --radius: 0.5rem;
+  }
+
+  .dark {
+    --background: 240 10% 3.9%;
+    --foreground: 0 0% 98%;
+    --card: 240 10% 3.9%;
+    --card-foreground: 0 0% 98%;
+    --popover: 240 10% 3.9%;
+    --popover-foreground: 0 0% 98%;
+    --primary: 206 100% 50%;
+    --primary-foreground: 240 6% 10%;
+    --secondary: 12 35% 54%;
+    --secondary-foreground: 240 6% 10%;
+    --muted: 240 4% 16%;
+    --muted-foreground: 240 5% 65%;
+    --accent: 42 98% 49%;
+    --accent-foreground: 240 6% 10%;
+    --destructive: 0 62% 30%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 240 4% 16%;
+    --input: 240 4% 16%;
+    --ring: 206 100% 50%;
+  }
+}
+
+@font-face {
+  font-family: 'MedievalSharp';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('https://fonts.googleapis.com/css2?family=MedievalSharp&display=swap');
+}
+
+@font-face {
+  font-family: 'Berkshire Swash';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('https://fonts.googleapis.com/css2?family=Berkshire+Swash&display=swap');
+}
+
+body {
+  @apply bg-uo-parchment dark:bg-uo-midnight text-uo-darkwood dark:text-uo-mist;
+  background-image: url('/images/parchment-bg-light.jpg');
+  background-size: cover;
+  background-attachment: fixed;
+  background-position: center;
+}
+
+.dark body {
+  background-image: url('/images/parchment-bg-dark.jpg');
+}
+
+/* Pergaminho e bordas estilo UO */
+.uo-scroll-edge {
+  position: relative;
+}
+
+.uo-scroll-edge::before,
+.uo-scroll-edge::after {
+  content: '';
+  position: absolute;
+  height: 20px;
+  width: 100%;
+  left: 0;
+  z-index: 1;
+}
+
+.uo-scroll-edge::before {
+  top: 0;
+  background: url('/images/scroll-edge-top.png') repeat-x;
+  background-size: auto 20px;
+}
+
+.uo-scroll-edge::after {
+  bottom: 0;
+  background: url('/images/scroll-edge-bottom.png') repeat-x;
+  background-size: auto 20px;
+}
+
+/* Rolagem estilizada */
+::-webkit-scrollbar {
+  width: 12px;
+  height: 12px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(122, 86, 46, 0.1);
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(153, 0, 0, 0.5);
+  border-radius: 10px;
+  border: 3px solid transparent;
+  background-clip: content-box;
+}
+
+.dark ::-webkit-scrollbar-thumb {
+  background: rgba(255, 215, 0, 0.3);
+  border: 3px solid transparent;
+  background-clip: content-box;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(153, 0, 0, 0.7);
+  border: 2px solid transparent;
+  background-clip: content-box;
+}
+
+.dark ::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 215, 0, 0.5);
+  border: 2px solid transparent;
+  background-clip: content-box;
+}
+
+@layer components {
+  .container-uo {
+    @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
+  }
+
+  /* Botões estilizados */
+  .btn-primary {
+    @apply relative px-4 py-2 bg-uo-crimson text-white rounded-md hover:bg-red-900 transition-colors shadow-md overflow-hidden font-medieval;
+  }
+  
+  .btn-primary::before {
+    @apply content-[''] absolute inset-0 bg-white opacity-10 transform scale-x-0 origin-left transition-transform duration-300;
+  }
+  
+  .btn-primary:hover::before {
+    @apply scale-x-100;
+  }
+
+  .btn-secondary {
+    @apply relative px-4 py-2 bg-uo-darkwood text-uo-parchment rounded-md hover:bg-gray-800 transition-colors shadow-md overflow-hidden font-medieval;
+  }
+  
+  .btn-secondary::before {
+    @apply content-[''] absolute inset-0 bg-white opacity-10 transform scale-x-0 origin-left transition-transform duration-300;
+  }
+  
+  .btn-secondary:hover::before {
+    @apply scale-x-100;
+  }
+  
+  .btn-gold {
+    @apply relative px-4 py-2 bg-uo-gold/80 text-uo-darkwood rounded-md hover:bg-uo-gold transition-colors shadow-md overflow-hidden font-medieval;
+  }
+
+  /* Cards estilizados */
+  .card-medieval {
+    @apply bg-white/90 dark:bg-gray-900/90 border border-uo-darkwood/20 dark:border-uo-gold/20 rounded-lg shadow-lg p-6 backdrop-blur-sm relative;
+  }
+  
+  .card-parchment {
+    @apply bg-uo-parchment/90 dark:bg-uo-midnight/90 border-2 border-uo-darkwood/30 dark:border-uo-gold/30 rounded-lg shadow-lg p-6 backdrop-blur-sm;
+    background-image: url('/images/parchment-texture.jpg');
+    background-blend-mode: overlay;
+    background-size: cover;
+  }
+
+  /* Títulos e textos */
+  .header-medieval {
+    @apply font-medieval text-uo-crimson dark:text-uo-gold;
+  }
+  
+  .title-uo {
+    @apply font-medieval text-3xl md:text-4xl text-uo-crimson dark:text-uo-gold relative inline-block;
+  }
+  
+  .title-uo::after {
+    @apply content-[''] block absolute -bottom-2 left-0 right-0 h-0.5 bg-uo-crimson/30 dark:bg-uo-gold/30 rounded;
+  }
+  
+  .subtitle-uo {
+    @apply font-medieval text-xl md:text-2xl text-uo-crimson dark:text-uo-gold;
+  }
+
+  /* Listas estilizadas */
+  .list-uo {
+    @apply space-y-2 my-4;
+  }
+  
+  .list-uo li {
+    @apply flex items-start;
+  }
+  
+  .list-uo li::before {
+    @apply content-['•'] text-uo-crimson dark:text-uo-gold mr-2 font-bold text-lg;
+  }
+  
+  /* Separadores */
+  .divider-uo {
+    @apply flex items-center my-6;
+  }
+  
+  .divider-uo::before,
+  .divider-uo::after {
+    @apply content-[''] flex-1 h-px bg-gradient-to-r;
+  }
+  
+  .divider-uo::before {
+    @apply from-transparent to-uo-crimson/30 dark:to-uo-gold/30 mr-3;
+  }
+  
+  .divider-uo::after {
+    @apply from-uo-crimson/30 dark:from-uo-gold/30 to-transparent ml-3;
+  }
+  
+  /* Anúncios e caixas de destaque */
+  .callout-uo {
+    @apply border-l-4 border-uo-crimson dark:border-uo-gold bg-uo-crimson/5 dark:bg-uo-gold/5 p-4 rounded-r-lg my-4;
+  }
+  
+  /* Efeitos de iluminação */
+  .glow-uo {
+    text-shadow: 0 0 5px rgba(153, 0, 0, 0.5);
+  }
+  
+  .dark .glow-uo {
+    text-shadow: 0 0 5px rgba(255, 215, 0, 0.5);
+  }
+  
+  /* Cantos decorativos para elementos */
+  .corner-decorated {
+    @apply relative;
+  }
+  
+  .corner-decorated::before,
+  .corner-decorated::after {
+    @apply content-[''] absolute w-3 h-3 border-uo-crimson/40 dark:border-uo-gold/40;
+  }
+  
+  .corner-decorated::before {
+    @apply top-0 left-0 border-t border-l;
+  }
+  
+  .corner-decorated::after {
+    @apply bottom-0 right-0 border-b border-r;
+  }
+} 
