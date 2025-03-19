@@ -45,7 +45,11 @@ export default {
         },
       },
       fontFamily: {
-        medieval: ['MedievalSharp', 'cursive'],
+        medieval: ['Cinzel', 'MedievalSharp', 'serif'],
+        cinzel: ['Cinzel', 'serif'],
+        almendra: ['Almendra', 'serif'],
+        metamorphous: ['Metamorphous', 'cursive'],
+        pirata: ['Pirata One', 'cursive'],
         berkshire: ['Berkshire Swash', 'cursive'],
         primary: ['Inter', 'sans-serif'],
       },

@@ -20,7 +20,7 @@ export default function Footer() {
           {/* Logo e descrição */}
           <div className="col-span-1 lg:col-span-1">
             <Link href="/" className="flex flex-col items-start">
-              <span className="font-berkshire text-2xl text-uo-gold">
+              <span className="font-medieval text-2xl text-uo-gold">
                 Nova Era Shard
               </span>
             </Link>
@@ -161,6 +161,33 @@ export default function Footer() {
 
         {/* Divider */}
         <div className="border-t border-uo-parchment/20 my-8"></div>
+
+        {/* Links de Suporte */}
+        <div className="mb-8">
+          <h3 className="font-medieval text-xl text-uo-crimson dark:text-uo-gold mb-4">Suporte</h3>
+          <ul className="space-y-2">
+            <li>
+              <Link href="/support" className="hover:text-uo-crimson dark:hover:text-uo-gold transition-colors">
+                Contato
+              </Link>
+            </li>
+            <li>
+              <Link href="/faq" className="hover:text-uo-crimson dark:hover:text-uo-gold transition-colors">
+                Perguntas Frequentes
+              </Link>
+            </li>
+            <li>
+              <Link href="/report-bug" className="hover:text-uo-crimson dark:hover:text-uo-gold transition-colors">
+                Reportar Bug
+              </Link>
+            </li>
+            <li>
+              <Link href="/fontes-demo" className="hover:text-uo-crimson dark:hover:text-uo-gold transition-colors">
+                Demonstração de Fontes
+              </Link>
+            </li>
+          </ul>
+        </div>
 
         {/* Copyright */}
         <div className="flex flex-col md:flex-row items-center justify-between">

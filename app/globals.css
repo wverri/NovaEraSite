@@ -4,48 +4,53 @@
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 240 10% 3.9%;
-    --card: 0 0% 100%;
-    --card-foreground: 240 10% 3.9%;
-    --popover: 0 0% 100%;
-    --popover-foreground: 240 10% 3.9%;
-    --primary: 206 100% 50%;
-    --primary-foreground: 0 0% 98%;
-    --secondary: 12 35% 54%;
-    --secondary-foreground: 0 0% 98%;
-    --muted: 240 5% 96%;
-    --muted-foreground: 240 4% 45%;
-    --accent: 42 98% 49%;
-    --accent-foreground: 240 6% 10%;
-    --destructive: 0 84% 30%;
-    --destructive-foreground: 0 0% 98%;
-    --border: 240 6% 90%;
-    --input: 240 6% 90%;
-    --ring: 206 100% 50%;
-    --radius: 0.5rem;
+    --foreground-rgb: var(--uo-darkwood);
+    --background-start-rgb: var(--uo-parchment);
+    --background-end-rgb: var(--uo-parchment);
+    
+    /* Variáveis de cores para temas claro/escuro */
+    --uo-background: 245, 232, 201;
+    --uo-foreground: 74, 55, 40;
+    --uo-card: 255, 255, 255, 0.7;
+    --uo-text: 74, 55, 40;
+    --uo-accent: 153, 0, 0;
+    --uo-accent-light: 153, 0, 0, 0.1;
+    --uo-accent-hover: 120, 0, 0;
+    --uo-gold: 255, 215, 0;
+    --uo-gold-light: 255, 215, 0, 0.1;
+    --uo-shadow: 0, 0, 0, 0.1;
+    
+    /* Espaçamentos padronizados */
+    --spacing-xs: 0.25rem;
+    --spacing-sm: 0.5rem;
+    --spacing-md: 1rem;
+    --spacing-lg: 1.5rem;
+    --spacing-xl: 2rem;
+    --spacing-2xl: 3rem;
+    
+    /* Raios de borda */
+    --radius-sm: 0.25rem;
+    --radius-md: 0.5rem;
+    --radius-lg: 0.75rem;
+    
+    /* Profundidade/Sombras */
+    --shadow-sm: 0 1px 2px rgba(var(--uo-shadow));
+    --shadow-md: 0 4px 6px rgba(var(--uo-shadow));
+    --shadow-lg: 0 10px 15px rgba(var(--uo-shadow));
+    --shadow-inner: inset 0 2px 4px rgba(var(--uo-shadow));
   }
 
   .dark {
-    --background: 240 10% 3.9%;
-    --foreground: 0 0% 98%;
-    --card: 240 10% 3.9%;
-    --card-foreground: 0 0% 98%;
-    --popover: 240 10% 3.9%;
-    --popover-foreground: 0 0% 98%;
-    --primary: 206 100% 50%;
-    --primary-foreground: 240 6% 10%;
-    --secondary: 12 35% 54%;
-    --secondary-foreground: 240 6% 10%;
-    --muted: 240 4% 16%;
-    --muted-foreground: 240 5% 65%;
-    --accent: 42 98% 49%;
-    --accent-foreground: 240 6% 10%;
-    --destructive: 0 62% 30%;
-    --destructive-foreground: 0 0% 98%;
-    --border: 240 4% 16%;
-    --input: 240 4% 16%;
-    --ring: 206 100% 50%;
+    --uo-background: 18, 18, 18;
+    --uo-foreground: 225, 223, 219;
+    --uo-card: 30, 30, 30, 0.7;
+    --uo-text: 225, 223, 219;
+    --uo-accent: 255, 215, 0;
+    --uo-accent-light: 255, 215, 0, 0.1;
+    --uo-accent-hover: 255, 195, 0;
+    --uo-gold: 255, 215, 0;
+    --uo-gold-light: 255, 215, 0, 0.1;
+    --uo-shadow: 0, 0, 0, 0.3;
   }
 }
 
@@ -71,6 +76,9 @@ body {
   background-size: cover;
   background-attachment: fixed;
   background-position: center;
+  letter-spacing: 0.015em;
+  text-rendering: optimizeLegibility;
+  font-feature-settings: "liga", "kern";
 }
 
 .dark body {
@@ -94,50 +102,375 @@ body {
 
 .uo-scroll-edge::before {
   top: 0;
-  background: url('/images/scroll-edge-top.png') repeat-x;
-  background-size: auto 20px;
+  background: linear-gradient(to bottom, 
+    rgba(var(--uo-background), 0.9) 0%, 
+    rgba(var(--uo-background), 0) 100%);
 }
 
 .uo-scroll-edge::after {
   bottom: 0;
-  background: url('/images/scroll-edge-bottom.png') repeat-x;
-  background-size: auto 20px;
+  background: linear-gradient(to top, 
+    rgba(var(--uo-background), 0.9) 0%, 
+    rgba(var(--uo-background), 0) 100%);
 }
 
-/* Rolagem estilizada */
+/* Scrollbar estilizada */
 ::-webkit-scrollbar {
   width: 12px;
   height: 12px;
+  background-color: rgba(var(--uo-background), 0.6);
 }
 
 ::-webkit-scrollbar-track {
-  background: rgba(122, 86, 46, 0.1);
-  border-radius: 10px;
+  border-radius: var(--radius-md);
+  background-color: rgba(var(--uo-background), 0.6);
+  box-shadow: var(--shadow-inner);
 }
 
 ::-webkit-scrollbar-thumb {
-  background: rgba(153, 0, 0, 0.5);
-  border-radius: 10px;
-  border: 3px solid transparent;
-  background-clip: content-box;
+  border-radius: var(--radius-md);
+  background-color: rgba(var(--uo-accent), 0.5);
+  border: 2px solid rgba(var(--uo-background), 0.6);
+  box-shadow: var(--shadow-sm);
+  transition: background-color 0.3s ease;
 }
 
 .dark ::-webkit-scrollbar-thumb {
-  background: rgba(255, 215, 0, 0.3);
-  border: 3px solid transparent;
-  background-clip: content-box;
+  background-color: rgba(var(--uo-gold), 0.5);
+  border: 2px solid rgba(var(--uo-background), 0.6);
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: rgba(153, 0, 0, 0.7);
-  border: 2px solid transparent;
-  background-clip: content-box;
+  background-color: rgba(var(--uo-accent), 0.8);
+  cursor: pointer;
+  box-shadow: var(--shadow-md);
 }
 
 .dark ::-webkit-scrollbar-thumb:hover {
-  background: rgba(255, 215, 0, 0.5);
-  border: 2px solid transparent;
-  background-clip: content-box;
+  background-color: rgba(var(--uo-gold), 0.8);
+}
+
+/* Elementos de UI melhorados */
+.container-uo {
+  width: 100%;
+  max-width: 1280px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
+}
+
+/* Botões com estilo medieval melhorado */
+.btn-primary {
+  @apply relative inline-flex items-center justify-center px-6 py-3 text-white font-medieval rounded-md transition-all duration-300 shadow-md border border-uo-crimson/50 dark:border-uo-gold/50 overflow-hidden;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  position: relative;
+}
+
+.btn-primary::before {
+  content: '';
+  @apply absolute inset-0 opacity-100;
+  background-image: linear-gradient(to right, #990000, #aa1111);
+  z-index: -2;
+}
+
+.btn-primary::after {
+  content: '';
+  @apply absolute inset-0 opacity-0 transition-all duration-300;
+  background-image: linear-gradient(to right, #aa0000, #cc2200);
+  z-index: -1;
+}
+
+.btn-primary:hover::after {
+  @apply opacity-100;
+}
+
+.btn-secondary {
+  @apply relative inline-flex items-center justify-center px-6 py-3 text-uo-parchment font-medieval rounded-md transition-all duration-300 shadow-md border border-uo-darkwood/50 dark:border-uo-gold/30 overflow-hidden;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  position: relative;
+}
+
+.btn-secondary::before {
+  content: '';
+  @apply absolute inset-0 opacity-100;
+  background-image: linear-gradient(to right, #4A3728, #5B4839);
+  z-index: -2;
+}
+
+.btn-secondary::after {
+  content: '';
+  @apply absolute inset-0 opacity-0 transition-all duration-300;
+  background-image: linear-gradient(to right, #5B4839, #6C594A);
+  z-index: -1;
+}
+
+.btn-secondary:hover::after {
+  @apply opacity-100;
+}
+
+.btn-gold {
+  @apply relative inline-flex items-center justify-center px-6 py-3 text-uo-darkwood font-medieval rounded-md transition-all duration-300 shadow-md border border-uo-gold/50 overflow-hidden;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  position: relative;
+}
+
+.btn-gold::before {
+  content: '';
+  @apply absolute inset-0 opacity-100;
+  background-image: linear-gradient(to right, #FFD700, #FFCC00);
+  z-index: -2;
+}
+
+.btn-gold::after {
+  content: '';
+  @apply absolute inset-0 opacity-0 transition-all duration-300;
+  background-image: linear-gradient(to right, #FFCC00, #FFAA00);
+  z-index: -1;
+}
+
+.btn-gold:hover::after {
+  @apply opacity-100;
+}
+
+/* Cards com estilo medieval melhorado */
+.card-medieval {
+  @apply p-6 rounded-lg bg-white/60 dark:bg-gray-900/60 backdrop-blur-sm shadow-md border border-uo-darkwood/10 dark:border-uo-gold/10;
+  position: relative;
+  z-index: 1;
+  transition: all 0.3s ease;
+}
+
+.card-parchment {
+  @apply p-6 rounded-lg bg-uo-parchment/90 dark:bg-uo-darkwood/80 backdrop-blur-sm shadow-md;
+  position: relative;
+  background-image: url('/images/parchment-texture.jpg');
+  background-blend-mode: overlay;
+  background-size: cover;
+  border: 1px solid rgba(var(--uo-accent), 0.2);
+}
+
+/* Cabeçalhos estilizados */
+.header-medieval {
+  @apply font-medieval text-uo-crimson dark:text-uo-gold relative inline-block mb-6;
+  text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+  letter-spacing: 0.025em;
+  font-weight: 500;
+}
+
+.title-uo {
+  @apply font-medieval text-3xl md:text-4xl lg:text-5xl text-center relative my-8 pb-4;
+  text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+}
+
+.title-uo::after {
+  content: '';
+  @apply absolute bottom-0 left-1/2 w-24 h-1 bg-uo-crimson dark:bg-uo-gold transform -translate-x-1/2;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+}
+
+.subtitle-uo {
+  @apply font-medieval text-2xl text-uo-crimson dark:text-uo-gold mb-4;
+  text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+  letter-spacing: 0.02em;
+}
+
+/* Listas estilizadas */
+.list-uo {
+  @apply space-y-2 my-4;
+}
+
+.list-uo li {
+  @apply pl-6 relative;
+}
+
+.list-uo li::before {
+  content: '•';
+  @apply absolute left-0 text-uo-crimson dark:text-uo-gold text-lg;
+}
+
+/* Divisores estilizados */
+.divider-uo {
+  @apply relative h-px w-full my-8;
+}
+
+.divider-uo::before,
+.divider-uo::after {
+  content: '';
+  @apply absolute h-px;
+}
+
+.divider-uo::before {
+  @apply w-full bg-gradient-to-r from-transparent via-uo-crimson/50 dark:via-uo-gold/50 to-transparent;
+}
+
+.divider-uo::after {
+  @apply w-20 left-1/2 -translate-x-1/2 bg-uo-crimson dark:bg-uo-gold;
+}
+
+/* Destaque informativo */
+.callout-uo {
+  @apply p-4 border-l-4 border-uo-crimson dark:border-uo-gold bg-uo-crimson/5 dark:bg-uo-gold/5 rounded-r-lg my-4;
+}
+
+/* Efeito de brilho */
+.glow-uo {
+  @apply relative;
+  text-shadow: 0 0 5px rgba(153, 0, 0, 0.7), 0 0 10px rgba(153, 0, 0, 0.5);
+}
+
+.dark .glow-uo {
+  text-shadow: 0 0 5px rgba(255, 215, 0, 0.7), 0 0 10px rgba(255, 215, 0, 0.5);
+}
+
+/* Cantos decorados */
+.corner-decorated {
+  @apply relative;
+}
+
+.corner-decorated::before,
+.corner-decorated::after {
+  content: '';
+  @apply absolute w-10 h-10 border-uo-crimson/40 dark:border-uo-gold/40;
+}
+
+.corner-decorated::before {
+  @apply top-0 left-0 border-t-2 border-l-2 rounded-tl-lg;
+}
+
+.corner-decorated::after {
+  @apply bottom-0 right-0 border-b-2 border-r-2 rounded-br-lg;
+}
+
+/* Efeitos em hover para cards */
+.card-medieval:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 20px -8px rgba(var(--uo-shadow));
+}
+
+/* Animação para links */
+a:not(.btn-primary, .btn-secondary, .btn-gold) {
+  @apply relative text-uo-crimson dark:text-uo-gold transition-colors duration-300;
+}
+
+a:not(.btn-primary, .btn-secondary, .btn-gold)::after {
+  content: '';
+  @apply absolute left-0 bottom-0 w-0 h-px bg-uo-crimson dark:bg-uo-gold transition-all duration-300;
+}
+
+a:not(.btn-primary, .btn-secondary, .btn-gold):hover::after {
+  @apply w-full;
+}
+
+/* Inputs estilizados */
+input, select, textarea {
+  @apply py-2 px-4 rounded-md border border-uo-darkwood/20 dark:border-uo-gold/20 bg-white/70 dark:bg-gray-800/70 text-uo-darkwood dark:text-uo-mist focus:outline-none focus:ring-2 focus:ring-uo-crimson dark:focus:ring-uo-gold transition-all duration-300;
+}
+
+/* Alert boxes */
+.alert-uo {
+  @apply p-4 rounded-lg border relative my-4;
+}
+
+.alert-uo-info {
+  @apply bg-blue-50 dark:bg-blue-900/20 border-blue-200 dark:border-blue-500/30 text-blue-800 dark:text-blue-200;
+}
+
+.alert-uo-warning {
+  @apply bg-yellow-50 dark:bg-yellow-900/20 border-yellow-200 dark:border-yellow-500/30 text-yellow-800 dark:text-yellow-200;
+}
+
+.alert-uo-error {
+  @apply bg-red-50 dark:bg-red-900/20 border-red-200 dark:border-red-500/30 text-red-800 dark:text-red-200;
+}
+
+.alert-uo-success {
+  @apply bg-green-50 dark:bg-green-900/20 border-green-200 dark:border-green-500/30 text-green-800 dark:text-green-200;
+}
+
+/* Efeito scroll reveal */
+.reveal-on-scroll {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+}
+
+.reveal-on-scroll.active {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Decoração de fundo para seções importantes */
+.hero-decoration {
+  @apply absolute pointer-events-none;
+  background-image: url('/images/medieval-ornament.png');
+  background-size: contain;
+  background-repeat: no-repeat;
+  opacity: 0.08;
+  z-index: -1;
+}
+
+/* Placeholder para o carregamento de imagens */
+.image-loading-placeholder {
+  @apply rounded-lg bg-gradient-to-r from-gray-200 to-gray-300 dark:from-gray-700 dark:to-gray-800 animate-pulse;
+}
+
+/* Texto degradê */
+.gradient-text {
+  @apply font-medieval text-transparent bg-clip-text;
+  background-image: linear-gradient(to right, #990000, #cc3300);
+}
+
+.dark .gradient-text {
+  background-image: linear-gradient(to right, #ffd700, #ffaa00);
+}
+
+/* Efeito de borda antiga */
+.aged-border {
+  @apply relative overflow-hidden;
+  box-shadow: 
+    0 0 0 1px rgba(var(--uo-accent), 0.1),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.1);
+}
+
+.aged-border::before {
+  content: '';
+  @apply absolute inset-0 opacity-10 pointer-events-none;
+  background-image: url('/images/aged-texture.jpg');
+  background-size: cover;
+  mix-blend-mode: overlay;
+}
+
+/* Grid de cartas medieval */
+.medieval-grid {
+  @apply grid gap-6;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+}
+
+/* Separador ornamentado */
+.ornate-divider {
+  @apply relative flex items-center justify-center my-12 h-6;
+}
+
+.ornate-divider::before, 
+.ornate-divider::after {
+  content: '';
+  @apply h-px flex-grow bg-gradient-to-r from-transparent;
+}
+
+.ornate-divider::before {
+  @apply to-uo-crimson/50 dark:to-uo-gold/50 mr-3;
+}
+
+.ornate-divider::after {
+  @apply from-uo-crimson/50 dark:from-uo-gold/50 ml-3;
+}
+
+.ornate-divider-icon {
+  @apply text-uo-crimson dark:text-uo-gold w-8 h-8;
 }
 
 @layer components {
@@ -147,31 +480,66 @@ body {
 
   /* Botões estilizados */
   .btn-primary {
-    @apply relative px-4 py-2 bg-uo-crimson text-white rounded-md hover:bg-red-900 transition-colors shadow-md overflow-hidden font-medieval;
+    @apply relative inline-flex items-center justify-center px-4 py-2 text-white rounded-md transition-all duration-300 shadow-md overflow-hidden font-medieval;
+    position: relative;
   }
   
   .btn-primary::before {
-    @apply content-[''] absolute inset-0 bg-white opacity-10 transform scale-x-0 origin-left transition-transform duration-300;
+    @apply content-[''] absolute inset-0 opacity-100;
+    background-image: linear-gradient(to right, #990000, #aa1111);
+    z-index: -2;
   }
   
-  .btn-primary:hover::before {
-    @apply scale-x-100;
+  .btn-primary::after {
+    @apply content-[''] absolute inset-0 opacity-0 transition-all duration-300;
+    background-image: linear-gradient(to right, #aa0000, #cc2200);
+    z-index: -1;
+  }
+  
+  .btn-primary:hover::after {
+    @apply opacity-100;
   }
 
   .btn-secondary {
-    @apply relative px-4 py-2 bg-uo-darkwood text-uo-parchment rounded-md hover:bg-gray-800 transition-colors shadow-md overflow-hidden font-medieval;
+    @apply relative inline-flex items-center justify-center px-4 py-2 text-uo-parchment rounded-md transition-all duration-300 shadow-md overflow-hidden font-medieval;
+    position: relative;
   }
   
   .btn-secondary::before {
-    @apply content-[''] absolute inset-0 bg-white opacity-10 transform scale-x-0 origin-left transition-transform duration-300;
+    @apply content-[''] absolute inset-0 opacity-100;
+    background-image: linear-gradient(to right, #4A3728, #5B4839);
+    z-index: -2;
   }
   
-  .btn-secondary:hover::before {
-    @apply scale-x-100;
+  .btn-secondary::after {
+    @apply content-[''] absolute inset-0 opacity-0 transition-all duration-300;
+    background-image: linear-gradient(to right, #5B4839, #6C594A);
+    z-index: -1;
+  }
+  
+  .btn-secondary:hover::after {
+    @apply opacity-100;
   }
   
   .btn-gold {
-    @apply relative px-4 py-2 bg-uo-gold/80 text-uo-darkwood rounded-md hover:bg-uo-gold transition-colors shadow-md overflow-hidden font-medieval;
+    @apply relative inline-flex items-center justify-center px-4 py-2 text-uo-darkwood rounded-md transition-all duration-300 shadow-md overflow-hidden font-medieval;
+    position: relative;
+  }
+  
+  .btn-gold::before {
+    @apply content-[''] absolute inset-0 opacity-100;
+    background-image: linear-gradient(to right, #FFD700, #FFCC00);
+    z-index: -2;
+  }
+  
+  .btn-gold::after {
+    @apply content-[''] absolute inset-0 opacity-0 transition-all duration-300;
+    background-image: linear-gradient(to right, #FFCC00, #FFAA00);
+    z-index: -1;
+  }
+  
+  .btn-gold:hover::after {
+    @apply opacity-100;
   }
 
   /* Cards estilizados */

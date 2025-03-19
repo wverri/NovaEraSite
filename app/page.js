@@ -1,12 +1,15 @@
+'use client';
+
 import Link from 'next/link';
-import { FaUserPlus, FaDownload, FaBook, FaDiscord, FaCalendarAlt } from 'react-icons/fa';
+import { FaUserPlus, FaDownload, FaBook, FaDiscord, FaCalendarAlt, FaShieldAlt, FaDragon, FaGem, FaStar } from 'react-icons/fa';
 import { SpeedInsights } from "@vercel/speed-insights/react"
+import { motion } from 'framer-motion';
 
 export default function Home() {
   return (
     <>
       {/* Hero Section */}
-      <section className="relative h-[80vh] overflow-hidden">
+      <section className="relative h-[85vh] overflow-hidden">
         <div className="absolute inset-0 bg-cover bg-center" style={{ 
           backgroundImage: "url('/images/uo-background.jpg')",
           filter: "brightness(0.4)"
@@ -14,19 +17,46 @@ export default function Home() {
         
         <div className="absolute inset-0 bg-gradient-to-b from-uo-darkwood/20 to-uo-darkwood/80 dark:from-uo-midnight/20 dark:to-uo-midnight/80"></div>
         
-        <div className="container-uo relative h-full flex flex-col justify-center items-center text-center">
-          <h1 className="font-berkshire text-4xl md:text-6xl lg:text-7xl text-uo-gold mb-6 drop-shadow-lg">
+        {/* Ornamentos decorativos */}
+        <div className="absolute top-20 left-10 w-64 h-64 hero-decoration opacity-20"></div>
+        <div className="absolute bottom-20 right-10 w-64 h-64 hero-decoration opacity-20" style={{ transform: 'rotate(180deg)' }}></div>
+        
+        <motion.div 
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.2 }}
+          className="container-uo relative h-full flex flex-col justify-center items-center text-center"
+        >
+          <h1 className="font-medieval text-5xl md:text-7xl lg:text-8xl text-uo-gold mb-6 drop-shadow-lg glow-uo">
             Nova Era Shard
           </h1>
           <p className="font-medieval text-xl md:text-2xl text-white mb-8 max-w-3xl">
-            Uma Nova Era em Ultima Online começa agora. Descubra o perfeito equilíbrio entre o clássico e o moderno.
+            Uma Nova Era em Ultima Online começa agora. Descubra o perfeito equilíbrio 
+            entre o clássico e o moderno.
           </p>
-          <div className="flex flex-col sm:flex-row gap-4">
-            <Link href="/account/register" className="btn-primary text-lg flex items-center justify-center gap-2">
-              <FaUserPlus /> Criar Conta
-            </Link>
-            <Link href="/download" className="btn-secondary text-lg flex items-center justify-center gap-2">
-              <FaDownload /> Download
+          
+          <div className="corner-decorated p-8">
+            <div className="flex flex-col sm:flex-row gap-4 mb-6">
+              <motion.div
+                whileHover={{ scale: 1.05 }}
+                transition={{ type: "spring", stiffness: 400, damping: 10 }}
+              >
+                <Link href="/account/register" className="btn-primary text-lg flex items-center justify-center gap-2 min-w-[180px]">
+                  <FaUserPlus /> Criar Conta
+                </Link>
+              </motion.div>
+              <motion.div
+                whileHover={{ scale: 1.05 }}
+                transition={{ type: "spring", stiffness: 400, damping: 10 }}
+              >
+                <Link href="/download" className="btn-secondary text-lg flex items-center justify-center gap-2 min-w-[180px]">
+                  <FaDownload /> Download
+                </Link>
+              </motion.div>
+            </div>
+            
+            <Link href="/wiki/novojogador" className="text-white hover:text-uo-gold transition-colors duration-300 font-medieval flex items-center justify-center gap-2">
+              <FaBook className="h-4 w-4" /> Guia para Novos Jogadores
             </Link>
           </div>
           
@@ -34,228 +64,245 @@ export default function Home() {
           <div className="absolute bottom-8 left-0 right-0">
             <div className="container-uo">
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                <div className="bg-uo-darkwood/80 dark:bg-uo-midnight/80 backdrop-blur-sm p-4 rounded-lg border border-uo-gold/30">
+                <div className="bg-uo-darkwood/80 dark:bg-uo-midnight/80 backdrop-blur-sm p-4 rounded-lg border border-uo-gold/30 transform transition-all duration-300 hover:scale-105">
                   <div className="flex items-center justify-between">
                     <span className="text-uo-parchment/80">Status:</span>
-                    <span className="flex items-center">
-                      <span className="w-3 h-3 bg-green-500 rounded-full mr-2"></span>
-                      <span className="text-green-400">Online</span>
+                    <span className="flex items-center text-green-400">
+                      <span className="h-2 w-2 bg-green-400 rounded-full mr-2"></span>
+                      Online
                     </span>
                   </div>
                 </div>
-                
-                <div className="bg-uo-darkwood/80 dark:bg-uo-midnight/80 backdrop-blur-sm p-4 rounded-lg border border-uo-gold/30">
+                <div className="bg-uo-darkwood/80 dark:bg-uo-midnight/80 backdrop-blur-sm p-4 rounded-lg border border-uo-gold/30 transform transition-all duration-300 hover:scale-105">
                   <div className="flex items-center justify-between">
                     <span className="text-uo-parchment/80">Jogadores:</span>
-                    <span className="text-uo-gold">148 / 500</span>
+                    <span className="text-uo-gold">157 Online</span>
                   </div>
                 </div>
-                
-                <div className="bg-uo-darkwood/80 dark:bg-uo-midnight/80 backdrop-blur-sm p-4 rounded-lg border border-uo-gold/30">
+                <div className="bg-uo-darkwood/80 dark:bg-uo-midnight/80 backdrop-blur-sm p-4 rounded-lg border border-uo-gold/30 transform transition-all duration-300 hover:scale-105">
                   <div className="flex items-center justify-between">
                     <span className="text-uo-parchment/80">Próximo Evento:</span>
-                    <span className="text-uo-gold flex items-center">
-                      <FaCalendarAlt className="mr-2" /> 28/03 - 20h
-                    </span>
+                    <span className="text-uo-gold">Hoje 20:00</span>
                   </div>
                 </div>
               </div>
             </div>
           </div>
-        </div>
+        </motion.div>
       </section>
       
-      {/* Features Section */}
-      <section className="py-20">
+      {/* Características */}
+      <section className="relative py-20">
+        <div className="absolute inset-0 pointer-events-none opacity-5">
+          <div className="absolute inset-0 bg-[url('/images/parchment-texture.jpg')] bg-cover mix-blend-overlay"></div>
+        </div>
+        
         <div className="container-uo">
-          <div className="text-center mb-16">
-            <h2 className="header-medieval text-3xl md:text-4xl mb-4">Por que jogar no Nova Era Shard?</h2>
-            <p className="text-lg text-uo-darkwood/80 dark:text-uo-mist/80 max-w-2xl mx-auto">
-              Nosso servidor foi projetado para oferecer a melhor experiência de Ultima Online, combinando elementos clássicos com melhorias modernas.
+          <div className="text-center mb-12">
+            <h2 className="title-uo">Características</h2>
+            <p className="text-uo-darkwood/80 dark:text-uo-mist/80 max-w-3xl mx-auto">
+              Descubra o que torna o Nova Era Shard uma experiência única e envolvente no universo de Ultima Online.
             </p>
           </div>
           
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <div className="card-medieval">
-              <div className="mb-4 text-uo-crimson dark:text-uo-gold">
-                <svg xmlns="http://www.w3.org/2000/svg" className="h-12 w-12" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z" />
-                </svg>
+            <motion.div 
+              whileHover={{ y: -5 }}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5, delay: 0.1 }}
+              className="card-medieval"
+            >
+              <div className="flex flex-col items-center mb-4">
+                <div className="h-16 w-16 rounded-full flex items-center justify-center bg-uo-crimson/10 dark:bg-uo-gold/10 mb-4">
+                  <FaShieldAlt className="h-8 w-8 text-uo-crimson dark:text-uo-gold" />
+                </div>
+                <h3 className="font-medieval text-2xl text-uo-crimson dark:text-uo-gold mb-2">PvM Balanceado</h3>
               </div>
-              <h3 className="font-medieval text-xl mb-2">Balanceamento Perfeito</h3>
-              <p className="text-uo-darkwood/80 dark:text-uo-mist/80">
-                Skills e classes cuidadosamente balanceadas para garantir um jogo justo e divertido para todos os estilos de jogo.
+              <p className="text-uo-darkwood/80 dark:text-uo-mist/80 text-center">
+                Sistema de combate refinado que oferece desafios para todos os níveis de jogadores, 
+                com criaturas diversas e dungeons empolgantes.
               </p>
-            </div>
+            </motion.div>
             
-            <div className="card-medieval">
-              <div className="mb-4 text-uo-crimson dark:text-uo-gold">
-                <svg xmlns="http://www.w3.org/2000/svg" className="h-12 w-12" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
-                </svg>
+            <motion.div 
+              whileHover={{ y: -5 }}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5, delay: 0.2 }}
+              className="card-medieval"
+            >
+              <div className="flex flex-col items-center mb-4">
+                <div className="h-16 w-16 rounded-full flex items-center justify-center bg-uo-crimson/10 dark:bg-uo-gold/10 mb-4">
+                  <FaGem className="h-8 w-8 text-uo-crimson dark:text-uo-gold" />
+                </div>
+                <h3 className="font-medieval text-2xl text-uo-crimson dark:text-uo-gold mb-2">Economia Dinâmica</h3>
               </div>
-              <h3 className="font-medieval text-xl mb-2">Comunidade Ativa</h3>
-              <p className="text-uo-darkwood/80 dark:text-uo-mist/80">
-                Uma comunidade acolhedora e ativa com eventos regulares, sistemas PvP, PvE e roleplaying para todos os gostos.
+              <p className="text-uo-darkwood/80 dark:text-uo-mist/80 text-center">
+                Mercado de jogadores robusto com sistema de crafting aprofundado, 
+                recursos limitados e itens únicos que valorizam suas conquistas.
               </p>
-            </div>
+            </motion.div>
             
-            <div className="card-medieval">
-              <div className="mb-4 text-uo-crimson dark:text-uo-gold">
-                <svg xmlns="http://www.w3.org/2000/svg" className="h-12 w-12" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
-                </svg>
+            <motion.div 
+              whileHover={{ y: -5 }}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5, delay: 0.3 }}
+              className="card-medieval"
+            >
+              <div className="flex flex-col items-center mb-4">
+                <div className="h-16 w-16 rounded-full flex items-center justify-center bg-uo-crimson/10 dark:bg-uo-gold/10 mb-4">
+                  <FaDragon className="h-8 w-8 text-uo-crimson dark:text-uo-gold" />
+                </div>
+                <h3 className="font-medieval text-2xl text-uo-crimson dark:text-uo-gold mb-2">Conteúdo Original</h3>
               </div>
-              <h3 className="font-medieval text-xl mb-2">Infraestrutura Robusta</h3>
-              <p className="text-uo-darkwood/80 dark:text-uo-mist/80">
-                Servidor com alta disponibilidade, protegido contra cheaters e com uma equipe de suporte sempre disponível.
+              <p className="text-uo-darkwood/80 dark:text-uo-mist/80 text-center">
+                Experimente quests exclusivas, eventos sazonais envolventes e um 
+                mundo vivo que evolui com as ações dos jogadores.
               </p>
-            </div>
+            </motion.div>
           </div>
         </div>
       </section>
       
-      {/* Quick Links Section */}
-      <section className="py-16 bg-uo-parchment/50 dark:bg-uo-darkwood/50">
-        <div className="container-uo">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <div className="bg-white/80 dark:bg-gray-900/80 rounded-lg shadow-lg p-6 backdrop-blur-sm transform transition-transform hover:scale-105">
-              <FaBook className="h-12 w-12 mb-4 text-uo-crimson dark:text-uo-gold" />
-              <h3 className="font-medieval text-xl mb-2">Guia para Iniciantes</h3>
-              <p className="text-uo-darkwood/80 dark:text-uo-mist/80 mb-4">
-                Novo no Ultima Online? Confira nosso guia completo para começar sua jornada.
-              </p>
-              <Link href="/wiki/guide" className="text-uo-crimson dark:text-uo-gold hover:underline">
-                Ler o guia →
-              </Link>
-            </div>
-            
-            <div className="bg-white/80 dark:bg-gray-900/80 rounded-lg shadow-lg p-6 backdrop-blur-sm transform transition-transform hover:scale-105">
-              <FaUserPlus className="h-12 w-12 mb-4 text-uo-crimson dark:text-uo-gold" />
-              <h3 className="font-medieval text-xl mb-2">Criar uma Conta</h3>
-              <p className="text-uo-darkwood/80 dark:text-uo-mist/80 mb-4">
-                É rápido e fácil criar uma conta para jogar no Nova Era Shard.
-              </p>
-              <Link href="/account/register" className="text-uo-crimson dark:text-uo-gold hover:underline">
-                Registrar agora →
-              </Link>
-            </div>
-            
-            <div className="bg-white/80 dark:bg-gray-900/80 rounded-lg shadow-lg p-6 backdrop-blur-sm transform transition-transform hover:scale-105">
-              <FaDiscord className="h-12 w-12 mb-4 text-uo-crimson dark:text-uo-gold" />
-              <h3 className="font-medieval text-xl mb-2">Junte-se ao Discord</h3>
-              <p className="text-uo-darkwood/80 dark:text-uo-mist/80 mb-4">
-                Participe de nossa comunidade no Discord para conversar e ficar por dentro das novidades.
-              </p>
-              <a 
-                href="https://discord.gg/novaerashard" 
-                target="_blank" 
-                rel="noopener noreferrer"
-                className="text-uo-crimson dark:text-uo-gold hover:underline"
-              >
-                Entrar no Discord →
-              </a>
-            </div>
+      {/* Ornate Divider */}
+      <div className="container-uo">
+        <div className="ornate-divider">
+          <div className="ornate-divider-icon">
+            <FaStar />
           </div>
         </div>
-      </section>
+      </div>
       
-      {/* News Section */}
-      <section className="py-20">
+      {/* Últimas Notícias */}
+      <section className="relative py-16 bg-uo-crimson/5 dark:bg-uo-gold/5">
         <div className="container-uo">
-          <div className="text-center mb-16">
-            <h2 className="header-medieval text-3xl md:text-4xl mb-4">Últimas Notícias</h2>
-            <p className="text-lg text-uo-darkwood/80 dark:text-uo-mist/80 max-w-2xl mx-auto">
-              Fique por dentro das últimas atualizações e eventos do Nova Era Shard.
+          <div className="text-center mb-12">
+            <h2 className="title-uo">Últimas Notícias</h2>
+            <p className="text-uo-darkwood/80 dark:text-uo-mist/80 max-w-3xl mx-auto">
+              Mantenha-se atualizado com as novidades, eventos e atualizações do Nova Era Shard.
             </p>
           </div>
           
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {/* Notícia 1 */}
-            <article className="card-medieval overflow-hidden">
-              <div className="h-48 overflow-hidden">
-                <div className="w-full h-full bg-gray-300 dark:bg-gray-700" style={{ backgroundImage: "url('/images/news-1.jpg')", backgroundSize: 'cover', backgroundPosition: 'center' }}></div>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <motion.article 
+              whileHover={{ y: -5 }}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5, delay: 0.1 }}
+              className="card-medieval overflow-hidden"
+            >
+              <div className="h-48 bg-cover bg-center mb-4 rounded-md" style={{ backgroundImage: "url('/images/news/dragon-event.jpg')" }}></div>
+              <div className="flex items-center text-sm text-uo-crimson/70 dark:text-uo-gold/70 mb-2">
+                <FaCalendarAlt className="mr-2 h-3 w-3" />
+                <span>15 de Junho, 2024</span>
               </div>
-              <div className="p-6">
-                <div className="flex items-center mb-2 text-sm text-uo-darkwood/60 dark:text-uo-mist/60">
-                  <FaCalendarAlt className="mr-2" /> 15 de Março, 2024
-                </div>
-                <h3 className="font-medieval text-xl mb-2">Grande Atualização de Primavera</h3>
-                <p className="text-uo-darkwood/80 dark:text-uo-mist/80 mb-4">
-                  Nossa atualização de primavera trará novos sistemas de crafting, balanceamento de skills e muito mais.
-                </p>
-                <Link href="/news/1" className="text-uo-crimson dark:text-uo-gold hover:underline">
-                  Leia mais →
-                </Link>
-              </div>
-            </article>
+              <h3 className="font-medieval text-xl text-uo-crimson dark:text-uo-gold mb-2">Invasão Dracônica</h3>
+              <p className="text-uo-darkwood/80 dark:text-uo-mist/80 mb-4">
+                Preparar para a mais grandiosa invasão de dragões já vista em Britannia. 
+                Recompensas únicas para os bravos guerreiros que defenderem o reino.
+              </p>
+              <Link href="/news/dragon-invasion" className="text-uo-crimson dark:text-uo-gold hover:underline inline-flex items-center">
+                Ler mais 
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 ml-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                </svg>
+              </Link>
+            </motion.article>
             
-            {/* Notícia 2 */}
-            <article className="card-medieval overflow-hidden">
-              <div className="h-48 overflow-hidden">
-                <div className="w-full h-full bg-gray-300 dark:bg-gray-700" style={{ backgroundImage: "url('/images/news-2.jpg')", backgroundSize: 'cover', backgroundPosition: 'center' }}></div>
+            <motion.article 
+              whileHover={{ y: -5 }}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5, delay: 0.2 }}
+              className="card-medieval overflow-hidden"
+            >
+              <div className="h-48 bg-cover bg-center mb-4 rounded-md" style={{ backgroundImage: "url('/images/news/craft-update.jpg')" }}></div>
+              <div className="flex items-center text-sm text-uo-crimson/70 dark:text-uo-gold/70 mb-2">
+                <FaCalendarAlt className="mr-2 h-3 w-3" />
+                <span>10 de Junho, 2024</span>
               </div>
-              <div className="p-6">
-                <div className="flex items-center mb-2 text-sm text-uo-darkwood/60 dark:text-uo-mist/60">
-                  <FaCalendarAlt className="mr-2" /> 10 de Março, 2024
-                </div>
-                <h3 className="font-medieval text-xl mb-2">Evento: A Invasão Demoníaca</h3>
-                <p className="text-uo-darkwood/80 dark:text-uo-mist/80 mb-4">
-                  Prepare-se para enfrentar ondas de demônios em nosso próximo grande evento de servidor.
-                </p>
-                <Link href="/news/2" className="text-uo-crimson dark:text-uo-gold hover:underline">
-                  Leia mais →
-                </Link>
-              </div>
-            </article>
+              <h3 className="font-medieval text-xl text-uo-crimson dark:text-uo-gold mb-2">Atualização de Crafting</h3>
+              <p className="text-uo-darkwood/80 dark:text-uo-mist/80 mb-4">
+                Nova atualização traz sistema de crafting expandido com novas receitas, 
+                materiais raros e propriedades especiais para seus itens.
+              </p>
+              <Link href="/news/craft-update" className="text-uo-crimson dark:text-uo-gold hover:underline inline-flex items-center">
+                Ler mais 
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 ml-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                </svg>
+              </Link>
+            </motion.article>
             
-            {/* Notícia 3 */}
-            <article className="card-medieval overflow-hidden">
-              <div className="h-48 overflow-hidden">
-                <div className="w-full h-full bg-gray-300 dark:bg-gray-700" style={{ backgroundImage: "url('/images/news-3.jpg')", backgroundSize: 'cover', backgroundPosition: 'center' }}></div>
+            <motion.article 
+              whileHover={{ y: -5 }}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5, delay: 0.3 }}
+              className="card-medieval overflow-hidden"
+            >
+              <div className="h-48 bg-cover bg-center mb-4 rounded-md" style={{ backgroundImage: "url('/images/news/new-dungeon.jpg')" }}></div>
+              <div className="flex items-center text-sm text-uo-crimson/70 dark:text-uo-gold/70 mb-2">
+                <FaCalendarAlt className="mr-2 h-3 w-3" />
+                <span>5 de Junho, 2024</span>
               </div>
-              <div className="p-6">
-                <div className="flex items-center mb-2 text-sm text-uo-darkwood/60 dark:text-uo-mist/60">
-                  <FaCalendarAlt className="mr-2" /> 5 de Março, 2024
-                </div>
-                <h3 className="font-medieval text-xl mb-2">Novo Sistema de Housing</h3>
-                <p className="text-uo-darkwood/80 dark:text-uo-mist/80 mb-4">
-                  Conheça nosso novo sistema de housing com mais opções de decoração e funcionalidades.
-                </p>
-                <Link href="/news/3" className="text-uo-crimson dark:text-uo-gold hover:underline">
-                  Leia mais →
-                </Link>
-              </div>
-            </article>
+              <h3 className="font-medieval text-xl text-uo-crimson dark:text-uo-gold mb-2">Nova Dungeon: Catacumbas Profundas</h3>
+              <p className="text-uo-darkwood/80 dark:text-uo-mist/80 mb-4">
+                Explore as recém-descobertas Catacumbas Profundas, um labirinto de 
+                salas cheias de desafios, tesouros e segredos ocultos.
+              </p>
+              <Link href="/news/deep-catacombs" className="text-uo-crimson dark:text-uo-gold hover:underline inline-flex items-center">
+                Ler mais 
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 ml-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                </svg>
+              </Link>
+            </motion.article>
           </div>
           
-          <div className="text-center mt-10">
-            <Link href="/news" className="btn-secondary inline-block">
-              Ver todas as notícias
+          <div className="text-center mt-8">
+            <Link href="/news" className="btn-secondary inline-flex items-center justify-center">
+              Ver Todas as Notícias
             </Link>
           </div>
         </div>
       </section>
       
-      {/* CTA Section */}
-      <section className="py-20 bg-uo-crimson/90 dark:bg-uo-midnight/90 text-white">
-        <div className="container-uo text-center">
-          <h2 className="font-berkshire text-3xl md:text-4xl mb-4 text-uo-gold">
-            Pronto para começar sua jornada?
-          </h2>
-          <p className="text-lg text-white/80 max-w-2xl mx-auto mb-8">
-            Junte-se a milhares de jogadores e descubra um mundo repleto de aventuras, desafios e comunidade vibrante.
-          </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Link href="/account/register" className="btn-primary text-lg flex items-center justify-center gap-2 bg-uo-gold text-uo-darkwood hover:bg-yellow-500">
-              <FaUserPlus /> Criar Conta
-            </Link>
-            <Link href="/download" className="btn-secondary text-lg flex items-center justify-center gap-2 bg-white/10 text-white hover:bg-white/20">
-              <FaDownload /> Download
-            </Link>
+      {/* Discord CTA */}
+      <section className="relative py-16 overflow-hidden">
+        <div className="absolute inset-0 opacity-10">
+          <div className="absolute inset-0 bg-[url('/images/discord-bg.jpg')] bg-cover bg-center"></div>
+        </div>
+        
+        <div className="container-uo relative">
+          <div className="card-parchment max-w-4xl mx-auto text-center">
+            <FaDiscord className="h-16 w-16 text-uo-crimson dark:text-uo-gold mx-auto mb-4" />
+            <h2 className="font-medieval text-3xl text-uo-crimson dark:text-uo-gold mb-4">Junte-se à Nossa Comunidade</h2>
+            <p className="text-uo-darkwood/80 dark:text-uo-mist/80 mb-6 max-w-xl mx-auto">
+              Conecte-se com outros jogadores, receba anúncios em primeira mão, participe de eventos exclusivos
+              e obtenha ajuda dos membros da comunidade e staff.
+            </p>
+            <a 
+              href="https://discord.gg/novaerashard" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="btn-primary inline-flex items-center justify-center"
+            >
+              <FaDiscord className="mr-2" /> Entrar no Discord
+            </a>
           </div>
         </div>
       </section>
+      
+      <SpeedInsights />
     </>
   );
 } 

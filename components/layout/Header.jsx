@@ -37,7 +37,7 @@ export default function Header() {
         <div className="flex items-center justify-between">
           {/* Logo */}
           <Link href="/" className="flex items-center">
-            <span className="font-berkshire text-2xl md:text-3xl text-uo-crimson dark:text-uo-gold">
+            <span className="font-medieval text-2xl md:text-3xl text-uo-crimson dark:text-uo-gold">
               Nova Era Shard
             </span>
           </Link>
