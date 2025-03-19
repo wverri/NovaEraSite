@@ -9,7 +9,7 @@ export default function Home() {
   return (
     <>
       {/* Hero Section */}
-      <section className="relative h-[85vh] overflow-hidden">
+      <section className="relative min-h-screen flex flex-col justify-between bg-black">
         <div className="absolute inset-0 bg-cover bg-center" style={{ 
           backgroundImage: "url('/images/uo-background.jpg')",
           filter: "brightness(0.4)"
@@ -21,74 +21,77 @@ export default function Home() {
         <div className="absolute top-20 left-10 w-64 h-64 hero-decoration opacity-20"></div>
         <div className="absolute bottom-20 right-10 w-64 h-64 hero-decoration opacity-20" style={{ transform: 'rotate(180deg)' }}></div>
         
-        <motion.div 
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.2 }}
-          className="container-uo relative h-full flex flex-col justify-center items-center text-center"
-        >
-          <h1 className="font-medieval text-5xl md:text-7xl lg:text-8xl text-uo-gold mb-6 drop-shadow-lg glow-uo">
-            Nova Era Shard
-          </h1>
-          <p className="font-medieval text-xl md:text-2xl text-white mb-8 max-w-3xl">
-            Uma Nova Era em Ultima Online começa agora. Descubra o perfeito equilíbrio 
-            entre o clássico e o moderno.
-          </p>
-          
-          <div className="corner-decorated p-8">
-            <div className="flex flex-col sm:flex-row gap-4 mb-6">
+        <div className="container-uo flex-1 flex flex-col justify-center">
+          <div className="flex flex-col items-center py-20">
+            <motion.div 
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.2 }}
+              className="text-center mb-16"
+            >
+              <h1 className="font-medieval text-5xl sm:text-7xl lg:text-8xl text-uo-gold mb-6 drop-shadow-lg glow-uo">
+                Nova Era Shard
+              </h1>
+              <p className="font-medieval text-xl md:text-2xl text-white max-w-3xl mx-auto px-4">
+                Uma Nova Era em Ultima Online começa agora. Descubra o perfeito equilíbrio 
+                entre o clássico e o moderno.
+              </p>
+            </motion.div>
+            
+            <div className="corner-decorated p-8 flex flex-col sm:flex-row gap-4 mb-4">
               <motion.div
                 whileHover={{ scale: 1.05 }}
                 transition={{ type: "spring", stiffness: 400, damping: 10 }}
+                className="w-full sm:w-auto"
               >
-                <Link href="/account/register" className="btn-primary text-lg flex items-center justify-center gap-2 min-w-[180px]">
-                  <FaUserPlus /> Criar Conta
+                <Link href="/account/register" className="btn-primary text-base sm:text-lg w-full sm:px-10 py-3 flex items-center justify-center gap-2">
+                  <FaUserPlus className="h-4 w-4" /> Criar Conta
                 </Link>
               </motion.div>
               <motion.div
                 whileHover={{ scale: 1.05 }}
                 transition={{ type: "spring", stiffness: 400, damping: 10 }}
+                className="w-full sm:w-auto"
               >
-                <Link href="/download" className="btn-secondary text-lg flex items-center justify-center gap-2 min-w-[180px]">
-                  <FaDownload /> Download
+                <Link href="/download" className="btn-secondary text-base sm:text-lg w-full sm:px-10 py-3 flex items-center justify-center gap-2">
+                  <FaDownload className="h-4 w-4" /> Download
                 </Link>
               </motion.div>
             </div>
             
-            <Link href="/wiki/novojogador" className="text-white hover:text-uo-gold transition-colors duration-300 font-medieval flex items-center justify-center gap-2">
-              <FaBook className="h-4 w-4" /> Guia para Novos Jogadores
-            </Link>
+            <div className="mt-4 mb-8">
+              <Link href="/wiki/novojogador" className="text-white hover:text-uo-gold transition-colors duration-300 font-medieval inline-flex items-center justify-center gap-2">
+                <FaBook className="h-4 w-4" /> Guia para Novos Jogadores
+              </Link>
+            </div>
           </div>
-          
-          {/* Server Stats */}
-          <div className="absolute bottom-8 left-0 right-0">
-            <div className="container-uo">
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                <div className="bg-uo-darkwood/80 dark:bg-uo-midnight/80 backdrop-blur-sm p-4 rounded-lg border border-uo-gold/30 transform transition-all duration-300 hover:scale-105">
-                  <div className="flex items-center justify-between">
-                    <span className="text-uo-parchment/80">Status:</span>
-                    <span className="flex items-center text-green-400">
-                      <span className="h-2 w-2 bg-green-400 rounded-full mr-2"></span>
-                      Online
-                    </span>
-                  </div>
-                </div>
-                <div className="bg-uo-darkwood/80 dark:bg-uo-midnight/80 backdrop-blur-sm p-4 rounded-lg border border-uo-gold/30 transform transition-all duration-300 hover:scale-105">
-                  <div className="flex items-center justify-between">
-                    <span className="text-uo-parchment/80">Jogadores:</span>
-                    <span className="text-uo-gold">157 Online</span>
-                  </div>
-                </div>
-                <div className="bg-uo-darkwood/80 dark:bg-uo-midnight/80 backdrop-blur-sm p-4 rounded-lg border border-uo-gold/30 transform transition-all duration-300 hover:scale-105">
-                  <div className="flex items-center justify-between">
-                    <span className="text-uo-parchment/80">Próximo Evento:</span>
-                    <span className="text-uo-gold">Hoje 20:00</span>
-                  </div>
-                </div>
+        </div>
+        
+        <div className="container-uo mb-8">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <div className="bg-black/70 backdrop-blur-sm p-4 rounded-lg border border-uo-gold/30 transition-all duration-300 hover:scale-105">
+              <div className="flex items-center justify-between">
+                <span className="text-uo-parchment/80">Status:</span>
+                <span className="flex items-center text-green-400">
+                  <span className="h-2 w-2 bg-green-400 rounded-full mr-2"></span>
+                  Online
+                </span>
+              </div>
+            </div>
+            <div className="bg-black/70 backdrop-blur-sm p-4 rounded-lg border border-uo-gold/30 transition-all duration-300 hover:scale-105">
+              <div className="flex items-center justify-between">
+                <span className="text-uo-parchment/80">Jogadores:</span>
+                <span className="text-uo-gold">157 Online</span>
+              </div>
+            </div>
+            <div className="bg-black/70 backdrop-blur-sm p-4 rounded-lg border border-uo-gold/30 transition-all duration-300 hover:scale-105">
+              <div className="flex items-center justify-between">
+                <span className="text-uo-parchment/80">Próximo Evento:</span>
+                <span className="text-uo-gold">Hoje 20:00</span>
               </div>
             </div>
           </div>
-        </motion.div>
+        </div>
       </section>
       
       {/* Características */}
