@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import { FaUserPlus, FaDownload, FaBook, FaDiscord, FaCalendarAlt } from 'react-icons/fa';
-import { SpeedInsights } from "@vercel/speed-insights/next"
+import { SpeedInsights } from "@vercel/speed-insights/react"
 
 export default function Home() {
   return (
