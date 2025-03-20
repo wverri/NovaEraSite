@@ -3,7 +3,7 @@
 import axios from 'axios';
 
 // URL base da API - pode ser configurada via variável de ambiente
-const API_BASE_URL = process.env.NEXT_PUBLIC_UO_API_URL || 'http://localhost:8080/api';
+const API_BASE_URL = process.env.NEXT_PUBLIC_UO_API_URL || 'http://novaerashard.ddns.net:8080/api';
 
 // Configuração do cliente axios com timeout mais longo para lidar com o retry da API
 const apiClient = axios.create({
