@@ -65,7 +65,7 @@ export default function ServerStatusPage() {
           <div className="card-medieval text-center p-8">
             <div className="text-red-600 text-xl mb-4">
               <FaServer className="h-12 w-12 mx-auto mb-4" />
-              <p>Erro ao carregar status do servidor</p>
+              <p>Servidor em Manutenção</p>
             </div>
             <p className="text-uo-darkwood/80 dark:text-uo-mist/80 mb-6">
               {error}
@@ -136,13 +136,13 @@ export default function ServerStatusPage() {
                   <div className="flex flex-col">
                     <div className="flex justify-between text-uo-darkwood/80 dark:text-uo-mist/80">
                       <span>Tempo online:</span>
-                      <span className="font-medium">
+                      <span className="font-medium" style={{ fontSize: '14px' }}>
                         {status.uptime.days}d {status.uptime.hours}h {status.uptime.minutes}m
                       </span>
                     </div>
                     <div className="flex justify-between text-uo-darkwood/80 dark:text-uo-mist/80">
                       <span>Último reinício:</span>
-                      <span className="font-medium">{formatDate(status.lastRestart)}</span>
+                      <span className="font-medium" style={{ fontSize: '14px' }}>{formatDate(status.lastRestart)}</span>
                     </div>
                   </div>
                 </div>
@@ -158,16 +158,16 @@ export default function ServerStatusPage() {
                         <span className="flex items-center">
                           <FaMicrochip className="h-3 w-3 mr-1" /> CPU:
                         </span>
-                        <span className="font-medium">{status.performance.cpu}%</span>
+                        <span className="font-medium">{Math.round(status.performance.cpu * 100)}%</span>
                       </div>
                       <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-1.5">
                         <div 
                           className={`h-1.5 rounded-full ${
-                            status.performance.cpu > 80 ? 'bg-red-500' :
-                            status.performance.cpu > 60 ? 'bg-yellow-500' :
+                            status.performance.cpu * 100 > 80 ? 'bg-red-500' :
+                            status.performance.cpu * 100 > 60 ? 'bg-yellow-500' :
                             'bg-green-500'
                           }`}
-                          style={{ width: `${status.performance.cpu}%` }}
+                          style={{ width: `${Math.min(status.performance.cpu * 100, 100)}%` }}
                         ></div>
                       </div>
                     </div>
@@ -177,18 +177,25 @@ export default function ServerStatusPage() {
                         <span className="flex items-center">
                           <FaMemory className="h-3 w-3 mr-1" /> Memória:
                         </span>
-                        <span className="font-medium">{status.performance.memory}%</span>
+                        <span className="font-medium">
+                          {Math.round((status.performance.memory / (status.performance.memory + status.performance.availableMemory)) * 100)}%
+                        </span>
                       </div>
                       <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-1.5">
                         <div 
                           className={`h-1.5 rounded-full ${
-                            status.performance.memory > 80 ? 'bg-red-500' :
-                            status.performance.memory > 60 ? 'bg-yellow-500' :
+                            (status.performance.memory / (status.performance.memory + status.performance.availableMemory)) * 100 > 80 ? 'bg-red-500' :
+                            (status.performance.memory / (status.performance.memory + status.performance.availableMemory)) * 100 > 60 ? 'bg-yellow-500' :
                             'bg-green-500'
                           }`}
-                          style={{ width: `${status.performance.memory}%` }}
+                          style={{ width: `${Math.min((status.performance.memory / (status.performance.memory + status.performance.availableMemory)) * 100, 100)}%` }}
                         ></div>
                       </div>
+                    </div>
+                    
+                    <div className="flex justify-between text-uo-darkwood/80 dark:text-uo-mist/80">
+                      <span>Memória Disponível:</span>
+                      <span className="font-medium">{status.performance.availableMemory.toFixed(2)} GB</span>
                     </div>
                     
                     <div className="flex justify-between text-uo-darkwood/80 dark:text-uo-mist/80">

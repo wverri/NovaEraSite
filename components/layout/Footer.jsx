@@ -2,8 +2,34 @@
 
 import Link from 'next/link';
 import { FaDiscord, FaFacebook, FaInstagram, FaYoutube, FaChevronUp } from 'react-icons/fa';
+import { useState, useEffect } from 'react';
 
 export default function Footer() {
+  const [serverStatus, setServerStatus] = useState({
+    status: 'offline',
+    players: { online: 0, max: 0 },
+    uptime: { days: 0, hours: 0, minutes: 0 }
+  });
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchServerStatus = async () => {
+      try {
+        const response = await fetch('/api/server-status');
+        if (response.ok) {
+          const data = await response.json();
+          setServerStatus(data);
+        }
+      } catch (error) {
+        console.error('Erro ao buscar status do servidor:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchServerStatus();
+  }, []);
+
   const scrollToTop = () => {
     window.scrollTo({
       top: 0,
@@ -12,6 +38,20 @@ export default function Footer() {
   };
 
   const currentYear = new Date().getFullYear();
+
+  // Formata o tempo de uptime
+  const formatUptime = () => {
+    if (loading) return 'Carregando...';
+    
+    const { days, hours, minutes } = serverStatus.uptime;
+    let uptimeText = '';
+    
+    if (days > 0) uptimeText += `${days} dia${days !== 1 ? 's' : ''} `;
+    if (hours > 0) uptimeText += `${hours} hora${hours !== 1 ? 's' : ''} `;
+    if (days === 0 && hours === 0 && minutes > 0) uptimeText += `${minutes} minuto${minutes !== 1 ? 's' : ''}`;
+    
+    return uptimeText.trim() || 'Indisponível';
+  };
 
   return (
     <footer className="bg-uo-darkwood/90 dark:bg-uo-midnight/90 text-uo-parchment mt-20">
@@ -137,18 +177,30 @@ export default function Footer() {
             <div className="p-4 bg-uo-darkwood rounded-md shadow-md">
               <div className="flex items-center justify-between mb-2">
                 <span className="text-uo-parchment/80">Status:</span>
-                <span className="flex items-center">
-                  <span className="w-3 h-3 bg-green-500 rounded-full mr-2"></span>
-                  <span className="text-green-400">Online</span>
-                </span>
+                {loading ? (
+                  <span className="text-uo-parchment/60">Carregando...</span>
+                ) : (
+                  <span className="flex items-center">
+                    <span className={`w-3 h-3 rounded-full mr-2 ${serverStatus.status === 'online' ? 'bg-green-500' : 'bg-red-500'}`}></span>
+                    <span className={serverStatus.status === 'online' ? 'text-green-400' : 'text-red-400'}>
+                      {serverStatus.status === 'online' ? 'Online' : 'Offline'}
+                    </span>
+                  </span>
+                )}
               </div>
               <div className="flex items-center justify-between mb-2">
                 <span className="text-uo-parchment/80">Jogadores:</span>
-                <span className="text-uo-gold">148 / 500</span>
+                {loading ? (
+                  <span className="text-uo-parchment/60">Carregando...</span>
+                ) : (
+                  <span className="text-uo-gold">
+                    {serverStatus.players.online} / {serverStatus.players.max}
+                  </span>
+                )}
               </div>
               <div className="flex items-center justify-between">
                 <span className="text-uo-parchment/80">Uptime:</span>
-                <span className="text-uo-parchment">7 dias 5 horas</span>
+                <span className="text-uo-parchment">{formatUptime()}</span>
               </div>
               <div className="mt-4 pt-4 border-t border-uo-parchment/20">
                 <Link href="/server-status" className="text-uo-gold hover:text-uo-parchment transition-colors text-sm">
