@@ -3,7 +3,7 @@
 import axios from 'axios';
 
 // URL base da API - pode ser configurada via variável de ambiente
-const API_BASE_URL = process.env.NEXT_PUBLIC_UO_API_URL || 'http://novaerashard.ddns.net:8080/api';
+const API_BASE_URL = process.env.NEXT_PUBLIC_UO_API_URL || 'http://localhost:8080/api';
 
 // Configuração do cliente axios com timeout mais longo para lidar com o retry da API
 const apiClient = axios.create({
@@ -48,55 +48,39 @@ const uoService = {
         return { success: false, message: 'Senha muito curta (mínimo 6 caracteres)' };
       }
       
-      // Chamada para a API do ServUO com timeout aumentado para dar tempo aos retries
-      const response = await apiClient.post('/account/create', { 
-        username, 
-        password, 
-        email 
+      console.log('Tentando criar conta com:', { username, email }); // Não logue a senha
+      
+      // Usar o endpoint proxy local em vez de chamar a API diretamente
+      const response = await fetch('/api/account/create', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ username, password, email })
       });
       
-      // Verifica se a API retornou erro
-      if (response.data.error) {
+      const data = await response.json();
+      console.log('Resposta da API via proxy:', response.status);
+      
+      if (!response.ok || data.error) {
         return {
           success: false,
-          message: response.data.message || 'Erro ao criar conta'
+          message: data.message || 'Erro ao criar conta'
         };
       }
       
       return {
         success: true,
         message: 'Conta criada com sucesso',
-        data: response.data
+        data: data
       };
     } catch (error) {
       console.error('Erro ao criar conta:', error);
       
-      // Tratamento detalhado de erros baseado nos códigos de status HTTP
-      if (error.response) {
-        // A requisição foi feita e o servidor respondeu com um status fora do intervalo 2xx
-        if (error.response.status === 400) {
-          return {
-            success: false,
-            message: error.response.data.message || 'Nome de usuário já existe ou dados inválidos',
-          };
-        } else if (error.response.status === 500) {
-          return {
-            success: false,
-            message: 'Erro no servidor ao processar sua solicitação. Tente novamente mais tarde.',
-          };
-        }
-      } else if (error.request) {
-        // A requisição foi feita mas não houve resposta
-        return {
-          success: false,
-          message: 'Não foi possível conectar ao servidor. Verifique sua conexão ou tente novamente mais tarde.',
-        };
-      }
-      
       return {
         success: false,
-        message: error.response?.data?.message || 'Erro ao criar conta',
-        error: error.response?.data || error.message
+        message: 'Erro ao criar conta. Por favor, tente novamente mais tarde.',
+        error: error.message
       };
     }
   },
@@ -114,22 +98,29 @@ const uoService = {
         };
       }
       
-      // Chamada para a API do ServUO com timeout aumentado
-      const response = await apiClient.post('/account/login', { 
-        username, 
-        password 
+      console.log('Tentando login com:', { username });
+      
+      // Usar o endpoint proxy local em vez de chamar a API diretamente
+      const response = await fetch('/api/account/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ username, password })
       });
       
-      // Verifica se a API retornou um erro
-      if (response.data.error || !response.data.token) {
+      const data = await response.json();
+      console.log('Resposta do login via proxy:', response.status);
+      
+      if (!response.ok || data.error || !data.token) {
         return {
           success: false,
-          message: response.data.message || 'Credenciais inválidas'
+          message: data.message || 'Credenciais inválidas'
         };
       }
       
       // Extrai o token e informações do usuário da resposta
-      const { token, username: returnedUsername } = response.data;
+      const { token, username: returnedUsername } = data;
       
       // Obtém informações detalhadas da conta
       const accountDetails = await this.getAccountDetails(username);
@@ -153,36 +144,10 @@ const uoService = {
     } catch (error) {
       console.error('Erro ao fazer login:', error);
       
-      // Tratamento detalhado de erros baseado nos códigos de status HTTP
-      if (error.response) {
-        if (error.response.status === 401) {
-          return {
-            success: false,
-            message: 'Credenciais inválidas. Verifique seu nome de usuário e senha.',
-          };
-        } else if (error.response.status === 403) {
-          return {
-            success: false,
-            message: 'Acesso negado. Sua conta pode estar bloqueada.',
-          };
-        } else if (error.response.status === 500) {
-          return {
-            success: false,
-            message: 'Erro no servidor ao processar seu login. Tente novamente mais tarde.',
-          };
-        }
-      } else if (error.request) {
-        // A requisição foi feita mas não houve resposta (timeout)
-        return {
-          success: false,
-          message: 'Login não concluído. O servidor demorou para responder. Tente novamente.',
-        };
-      }
-      
       return {
         success: false,
-        message: error.response?.data?.message || 'Credenciais inválidas',
-        error: error.response?.data || error.message
+        message: 'Erro ao fazer login. Por favor, tente novamente mais tarde.',
+        error: error.message
       };
     }
   },
@@ -194,11 +159,53 @@ const uoService = {
    */
   async getAccountDetails(username) {
     try {
-      const response = await apiClient.get(`/account/${username}`);
-      return response.data;
+      if (!username) {
+        return { success: false, message: 'Nome de usuário não fornecido' };
+      }
+      
+      // Obter token de autenticação
+      const token = localStorage.getItem('uo_auth_token');
+      
+      // Usar o endpoint proxy local em vez de chamar a API diretamente
+      const response = await fetch(`/api/account/details?username=${encodeURIComponent(username)}`, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          ...(token ? { 'Authorization': `Bearer ${token}` } : {})
+        }
+      });
+      
+      const data = await response.json();
+      
+      if (!response.ok || data.error) {
+        if (response.status === 401) {
+          // Token expirado ou inválido
+          this.logout();
+          return {
+            success: false,
+            message: 'Sua sessão expirou. Por favor, faça login novamente.',
+            sessionExpired: true
+          };
+        }
+        
+        return {
+          success: false,
+          message: data.message || 'Erro ao obter detalhes da conta'
+        };
+      }
+      
+      return {
+        success: true,
+        ...data
+      };
     } catch (error) {
       console.error('Erro ao obter detalhes da conta:', error);
-      return {};
+      
+      return {
+        success: false,
+        message: 'Erro ao obter detalhes da conta. Por favor, tente novamente mais tarde.',
+        error: error.message
+      };
     }
   },
   
@@ -247,8 +254,8 @@ const uoService = {
   },
   
   /**
-   * Obtém os personagens do usuário logado
-   * @returns {Promise<Object>} Objeto com os personagens
+   * Obtém a lista de personagens do usuário
+   * @returns {Promise<Object>} Objeto com a lista de personagens
    */
   async getCharacters() {
     try {
@@ -256,36 +263,64 @@ const uoService = {
         return { success: false, message: 'Usuário não está logado' };
       }
       
-      const username = this.getLoggedUsername();
+      // Obter o nome de usuário do localStorage
+      const userData = JSON.parse(localStorage.getItem('uo_user') || '{}');
+      const username = userData.username;
+      
       if (!username) {
         return { success: false, message: 'Nome de usuário não encontrado' };
       }
       
-      // Chama o endpoint para obter personagens da conta
-      const response = await apiClient.get(`/character/account/${username}`);
+      console.log('Obtendo personagens para o usuário:', username);
       
-      return { 
-        success: true, 
-        message: response.data.length > 0 ? 'Personagens encontrados' : 'Nenhum personagem encontrado', 
-        characters: response.data
-      };
-    } catch (error) {
-      console.error('Erro ao obter personagens:', error);
+      // Obter token de autenticação
+      const token = localStorage.getItem('uo_auth_token');
       
-      if (error.response && error.response.status === 401) {
-        // Token expirado ou inválido
-        this.logout(); // Faz logout para limpar os dados inválidos
+      // Usar o endpoint de detalhes da conta para obter os personagens
+      const response = await fetch(`/api/account/details?username=${encodeURIComponent(username)}`, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
+        }
+      });
+      
+      console.log('Status da resposta:', response.status);
+      
+      const data = await response.json();
+      console.log('Dados da conta recebidos:', data);
+      
+      if (!response.ok || data.error) {
+        if (response.status === 401) {
+          // Token expirado ou inválido
+          this.logout();
+          return {
+            success: false,
+            message: 'Sua sessão expirou. Por favor, faça login novamente.',
+            sessionExpired: true
+          };
+        }
+        
         return {
           success: false,
-          message: 'Sua sessão expirou. Por favor, faça login novamente.',
-          sessionExpired: true
+          message: data.message || 'Erro ao obter lista de personagens'
         };
       }
       
+      // Extrair a lista de personagens dos dados da conta
+      const characters = data.characters || [];
+      
+      return {
+        success: true,
+        characters: characters
+      };
+    } catch (error) {
+      console.error('Erro ao obter lista de personagens:', error);
+      
       return {
         success: false,
-        message: error.response?.data?.message || 'Erro ao obter personagens',
-        error: error.response?.data || error.message
+        message: 'Erro ao obter lista de personagens. Por favor, tente novamente mais tarde.',
+        error: error.message
       };
     }
   },
@@ -305,30 +340,97 @@ const uoService = {
         return { success: false, message: 'Nome do personagem não fornecido' };
       }
       
-      // Chama o endpoint para obter detalhes do personagem
-      const response = await apiClient.get(`/character/${encodeURIComponent(characterName)}`);
+      console.log('Obtendo detalhes do personagem:', characterName);
       
-      return {
-        success: true,
-        character: response.data
+      // Obter token de autenticação
+      const token = localStorage.getItem('uo_auth_token');
+      console.log('Token disponível:', !!token);
+      
+      // Construir a URL corretamente
+      const url = `/api/character/details?name=${encodeURIComponent(characterName)}`;
+      console.log('URL da requisição:', url);
+      
+      // Preparar os headers com o token
+      const headers = {
+        'Content-Type': 'application/json'
       };
-    } catch (error) {
-      console.error('Erro ao obter detalhes do personagem:', error);
       
-      if (error.response && error.response.status === 401) {
-        // Token expirado ou inválido
-        this.logout();
+      if (token) {
+        headers['Authorization'] = `Bearer ${token}`;
+      }
+      
+      console.log('Headers da requisição:', headers);
+      
+      // Usar o endpoint proxy local em vez de chamar a API diretamente
+      const response = await fetch(url, {
+        method: 'GET',
+        headers: headers,
+        cache: 'no-store' // Desabilitar cache para garantir dados atualizados
+      });
+      
+      console.log('Status da resposta:', response.status);
+      
+      // Verificar se a resposta é um JSON válido
+      let data;
+      try {
+        data = await response.json();
+        console.log('Dados recebidos:', data);
+      } catch (jsonError) {
+        console.error('Erro ao processar JSON da resposta:', jsonError);
         return {
           success: false,
-          message: 'Sua sessão expirou. Por favor, faça login novamente.',
-          sessionExpired: true
+          message: 'Erro ao processar resposta do servidor',
+          error: jsonError.message
+        };
+      }
+      
+      // Verificar se a resposta contém um erro
+      if (!response.ok || data.error) {
+        if (response.status === 401) {
+          // Token expirado ou inválido
+          this.logout();
+          return {
+            success: false,
+            message: 'Sua sessão expirou. Por favor, faça login novamente.',
+            sessionExpired: true
+          };
+        }
+        
+        if (response.status === 404 || (data.message && data.message.includes('não encontrado'))) {
+          return {
+            success: false,
+            message: `Personagem "${characterName}" não encontrado no servidor.`,
+            notFound: true
+          };
+        }
+        
+        return {
+          success: false,
+          message: data.message || 'Erro ao obter detalhes do personagem',
+          details: data.details || null
+        };
+      }
+      
+      // Verificar se os dados recebidos são válidos
+      if (!data || (typeof data === 'object' && Object.keys(data).length === 0)) {
+        return {
+          success: false,
+          message: 'Dados do personagem não disponíveis',
+          notFound: true
         };
       }
       
       return {
+        success: true,
+        character: data
+      };
+    } catch (error) {
+      console.error('Erro ao obter detalhes do personagem:', error);
+      
+      return {
         success: false,
-        message: error.response?.data?.message || 'Erro ao obter detalhes do personagem',
-        error: error.response?.data || error.message
+        message: 'Erro ao obter detalhes do personagem. Por favor, tente novamente mais tarde.',
+        error: error.message
       };
     }
   },

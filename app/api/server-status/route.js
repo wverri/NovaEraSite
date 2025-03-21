@@ -16,7 +16,7 @@ export async function GET(request) {
     }
     
     // Usa a mesma URL base que o uoService
-    const API_BASE_URL = process.env.NEXT_PUBLIC_UO_API_URL || 'http://novaerashard.ddns.net:8080/api';
+    const API_BASE_URL = process.env.NEXT_PUBLIC_UO_API_URL || 'http://localhost:8080/api';
     
     // Faz uma requisição para o endpoint de status do servidor
     const response = await fetch(`${API_BASE_URL}/server/status`);

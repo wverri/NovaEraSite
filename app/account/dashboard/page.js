@@ -27,10 +27,13 @@ export default function DashboardPage() {
         // Carregar nome de usuário
         const currentUsername = uoService.getLoggedUsername();
         setUsername(currentUsername);
+        console.log('Nome de usuário carregado:', currentUsername);
+        console.log('Token disponível:', !!uoService.getAuthToken());
 
         // Carregar detalhes da conta
         try {
           const accountData = await uoService.getAccountDetails(currentUsername);
+          console.log('Detalhes da conta:', accountData);
           setAccountDetails(accountData);
         } catch (accountErr) {
           console.error('Erro ao carregar detalhes da conta:', accountErr);
@@ -38,8 +41,45 @@ export default function DashboardPage() {
 
         // Carregar personagens
         const charactersData = await uoService.getCharacters();
+        console.log('Dados de personagens recebidos:', charactersData);
+        
         if (charactersData.success) {
-          setCharacters(charactersData.characters || []);
+          // Verificar se characters é um array de strings ou de objetos
+          let charactersList = charactersData.characters || [];
+          
+          // Se for um array de strings, converter para objetos com propriedade name
+          if (charactersList.length > 0 && typeof charactersList[0] === 'string') {
+            charactersList = charactersList.map(name => ({ name }));
+          }
+          
+          setCharacters(charactersList);
+          
+          // Se tiver personagens, carregar detalhes de cada um
+          if (charactersList.length > 0) {
+            console.log('Carregando detalhes dos personagens...');
+            
+            // Carregar detalhes de cada personagem
+            for (const character of charactersList) {
+              try {
+                const characterName = character.name;
+                console.log(`Carregando detalhes para: ${characterName}`);
+                
+                const details = await uoService.getCharacterDetails(characterName);
+                console.log(`Detalhes recebidos para ${characterName}:`, details);
+                
+                // Atualizar o personagem na lista com os detalhes completos
+                if (details.success && details.character) {
+                  setCharacters(prevChars => 
+                    prevChars.map(c => 
+                      c.name === characterName ? {...c, ...details.character} : c
+                    )
+                  );
+                }
+              } catch (detailErr) {
+                console.error(`Erro ao carregar detalhes para personagem:`, detailErr);
+              }
+            }
+          }
         } else {
           if (charactersData.sessionExpired) {
             router.push('/account/login');
@@ -255,12 +295,6 @@ export default function DashboardPage() {
                       </div>
                     </div>
                   )}
-                  
-                  <Link href={`/characters/${character.name}`}>
-                    <button className="mt-1 w-full btn-secondary py-1 text-sm">
-                      Ver Detalhes
-                    </button>
-                  </Link>
                 </div>
               ))}
             </div>
