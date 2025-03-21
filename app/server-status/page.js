@@ -158,7 +158,7 @@ export default function ServerStatusPage() {
                         <span className="flex items-center">
                           <FaMicrochip className="h-3 w-3 mr-1" /> CPU:
                         </span>
-                        <span className="font-medium">{Math.round(status.performance.cpu * 100)}%</span>
+                        <span className="font-medium">{Math.floor(status.performance.cpu * 100, 100)}%</span>
                       </div>
                       <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-1.5">
                         <div 

@@ -6,27 +6,6 @@ const API_SECRET_KEY = process.env.API_SECRET_KEY || 'chave_secreta_temporaria';
 
 export async function GET(request) {
   try {
-    console.log('Testando conectividade com a API');
-    
-    // Teste de DNS
-    const dns = await fetch('https://cloudflare-dns.com/dns-query?name=novaerashard.ddns.net&type=A', {
-      headers: { 'Accept': 'application/dns-json' }
-    }).then(r => r.json());
-    
-    console.log('Resolução DNS:', dns);
-    
-    // Teste de ping
-    const pingStart = Date.now();
-    try {
-      await fetch(`http://novaerashard.ddns.net:8080/ping`, { 
-        method: 'HEAD',
-        signal: AbortSignal.timeout(2000)
-      });
-      console.log('Ping bem-sucedido:', Date.now() - pingStart, 'ms');
-    } catch (e) {
-      console.log('Falha no ping:', e.message);
-    }
-    
     // Verificar autenticação
     const authResult = await verifyAuthentication(request);
     if (!authResult.success) {

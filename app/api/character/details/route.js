@@ -20,7 +20,12 @@ export async function GET(request) {
     // Usa a mesma URL base que o uoService
     const API_BASE_URL = process.env.NEXT_PUBLIC_UO_API_URL || 'http://novaerashard.ddns.net:8080/api';
     
-    const apiUrl = `${API_BASE_URL}/character/${encodeURIComponent(characterName)}`;
+    // Modificação: voltando ao formato original, mas com codificação melhorada
+    // Use encodeURIComponent para codificar o nome do personagem para a URL
+    // Isso trata espaços e caracteres especiais de forma adequada
+    const encodedName = encodeURIComponent(characterName);
+    const apiUrl = `${API_BASE_URL}/character/${encodedName}`;
+    
     console.log('Proxy de detalhes do personagem: Enviando requisição para URL:', apiUrl);
     
     // Faz a requisição para o servidor a partir do lado do servidor Next.js
@@ -30,7 +35,9 @@ export async function GET(request) {
         'Content-Type': 'application/json',
         // Repassa o token de autenticação se existir
         ...(authHeader ? { 'Authorization': authHeader } : {})
-      }
+      },
+      // Adiciona um timeout de 8 segundos para evitar erros 504
+      signal: AbortSignal.timeout(8000)
     });
     
     console.log('Status da resposta:', response.status);
