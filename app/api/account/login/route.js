@@ -1,34 +1,37 @@
 // Endpoint proxy para login
 export async function POST(request) {
   try {
-    // Obter dados do corpo da requisição
+    console.log('Iniciando requisição de login');
     const data = await request.json();
     
-    // Usa a mesma URL base que o uoService
     const API_BASE_URL = process.env.NEXT_PUBLIC_UO_API_URL || 'http://localhost:8080/api';
     
-    console.log('Proxy de login: Enviando requisição para', `${API_BASE_URL}/account/login`);
+    console.log('URL da API:', API_BASE_URL);
+    console.log('Enviando para:', `${API_BASE_URL}/account/login`);
     
-    // Faz a requisição para o servidor a partir do lado do servidor Next.js
+    // Tente com um timeout menor
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), 5000);
+    
     const response = await fetch(`${API_BASE_URL}/account/login`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify(data)
+      body: JSON.stringify(data),
+      signal: controller.signal
     });
     
-    // Obtém a resposta como JSON
+    clearTimeout(timeoutId);
+    
+    console.log('Resposta recebida com status:', response.status);
     const responseData = await response.json();
     
-    console.log('Proxy de login: Resposta recebida com status', response.status);
-    
-    // Retorna a resposta para o cliente
     return Response.json(responseData, { status: response.status });
   } catch (error) {
-    console.error('Erro no proxy de login:', error);
+    console.error('Erro detalhado:', error.name, error.message);
     return Response.json(
-      { error: true, message: 'Erro ao processar login via proxy' },
+      { error: true, message: `Erro: ${error.message}` },
       { status: 500 }
     );
   }
