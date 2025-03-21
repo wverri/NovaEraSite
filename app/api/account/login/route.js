@@ -11,7 +11,7 @@ export async function POST(request) {
     
     // Tente com um timeout menor
     const controller = new AbortController();
-    const timeoutId = setTimeout(() => controller.abort(), 5000);
+    const timeoutId = setTimeout(() => controller.abort(), 20000);
     
     const response = await fetch(`${API_BASE_URL}/account/login`, {
       method: 'POST',
