@@ -18,7 +18,7 @@ export async function GET(request) {
     }
     
     // Usa a mesma URL base que o uoService
-    const API_BASE_URL = process.env.NEXT_PUBLIC_UO_API_URL || 'http://localhost:8080/api';
+    const API_BASE_URL = process.env.NEXT_PUBLIC_UO_API_URL || 'http://novaerashard.ddns.net:8080/api';
     
     const apiUrl = `${API_BASE_URL}/account/${encodeURIComponent(username)}`;
     console.log('Proxy de detalhes da conta: Enviando requisição para URL:', apiUrl);

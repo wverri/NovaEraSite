@@ -5,7 +5,7 @@ export async function POST(request) {
     const data = await request.json();
     
     // Usa a mesma URL base que o uoService
-    const API_BASE_URL = process.env.NEXT_PUBLIC_UO_API_URL || 'http://localhost:8080/api';
+    const API_BASE_URL = process.env.NEXT_PUBLIC_UO_API_URL || 'http://novaerashard.ddns.net:8080/api';
     
     console.log('Proxy de criação de conta: Enviando requisição para', `${API_BASE_URL}/account/create`);
     

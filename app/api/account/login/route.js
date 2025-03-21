@@ -4,7 +4,7 @@ export async function POST(request) {
     console.log('Iniciando requisição de login');
     const data = await request.json();
     
-    const API_BASE_URL = process.env.NEXT_PUBLIC_UO_API_URL || 'http://localhost:8080/api';
+    const API_BASE_URL = process.env.NEXT_PUBLIC_UO_API_URL || 'http://novaerashard.ddns.net:8080/api';
     
     console.log('URL da API:', API_BASE_URL);
     console.log('Enviando para:', `${API_BASE_URL}/account/login`);
